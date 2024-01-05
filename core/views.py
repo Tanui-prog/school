@@ -26,7 +26,7 @@ def classes(request):
     context = {
         'classes': classes
     }
-    return render(request, 'classes.html', context)
+    return render(request, '_class/classes.html', context)
     
 
 
@@ -47,7 +47,7 @@ def add_class(request):
         # Redirect to the same page after adding a class
 
     else:
-        return render(request, 'add-class.html', {'message': 'Please fill in the class details'})
+        return render(request, '_class/add-class.html', {'message': 'Please fill in the class details'})
 
 
 def saveclass(request, class_id):
@@ -77,7 +77,7 @@ def saveclass(request, class_id):
         return redirect('classes')  # Redirect to classes page after successful update
     else:
         # If not POST, render edit form
-        return render(request, 'edit-class.html', {'class': class_obj})
+        return render(request, '_class/edit-class.html', {'class': class_obj})
     
 
 
@@ -122,13 +122,13 @@ def addsubject(request):
         messages.success(request, 'Subject added successfully')
         return redirect('addsubject')
     else:
-        return render(request, 'add-subject.html', {'classes': classes})
+        return render(request, 'subjects/add-subject.html', {'classes': classes})
     
 
 def  subjects(request):
     subjects = Subject.objects.all()
     context = {'subjects': subjects}
-    return render(request,'subjects.html',context)
+    return render(request,'subjects/subjects.html',context)
  
 
 def editsubject(request, subject_id):
@@ -165,7 +165,7 @@ def editsubject(request, subject_id):
         return redirect('subjects')  # Redirect to subjects page after successful update
     else:
         # If not POST, render edit form
-        return render(request, 'edit-subject.html', {'subject': subject_obj, 'classes': Classes.objects.all()})  # Pass all classes to the template
+        return render(request, 'subjects/edit-subject.html', {'subject': subject_obj, 'classes': Classes.objects.all()})  # Pass all classes to the template
 
 
 
@@ -223,14 +223,14 @@ def addteacher(request):
         messages.success(request, 'Teacher added successfully')
         return redirect('addteacher')
     else:
-        return render(request, 'add-teacher.html')
+        return render(request, 'teachers/add-teacher.html')
 
 
 
 def teachers(request):
     teachers = Teacher.objects.all()
     context = {'teachers': teachers}
-    return render(request, 'teachers.html',context)
+    return render(request, 'teachers/teachers.html',context)
 
 
 def  delete_teacher(request, teacher_id):
@@ -291,20 +291,20 @@ def editteacher(request, teacher_id):
         return redirect('editteacher', teacher_id=teacher_id)
 
     # For GET requests, populate form fields with existing data
-    return render(request, 'edit-teacher.html', {'teacher': teacher})
+    return render(request, 'teachers/edit-teacher.html', {'teacher': teacher})
 
 
 
 def  teachers_grid(request):
     teachers = Teacher.objects.all()
     context = {'teachers': teachers}
-    return render(request, 'teachers-grid.html', context)
+    return render(request, 'teachers/teachers-grid.html', context)
 
 
 def teacher_details(request,teacher_id):
     teacher_obj= Teacher.objects.get(teacher_id=teacher_id)
     context = {'teacher': teacher_obj}
-    return render(request, 'teacher-details.html', context)
+    return render(request, 'teachers/teacher-details.html', context)
 
 
 
@@ -316,8 +316,7 @@ def addstudent(request):
     classes = Classes.objects.all()
     
     if request.method == 'POST':
-       
-    
+        # Retrieve form data
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         student_gender = request.POST.get('gender')
@@ -326,57 +325,98 @@ def addstudent(request):
         blood_group = request.POST.get('blood_group')
         religion = request.POST.get('religion')
         age = request.POST.get('age')
-        student_class = request.POST.get('student_class')
+        student_class = request.POST.get('student_class')  # Assuming this is the class ID
         session = request.POST.get('session')
         image = request.FILES.get('profile_picture') 
         parent_name = request.POST.get('parent_name')
         parent_email = request.POST.get('parent_email')
         parent_phone = request.POST.get('parent_phone')
         parent_address = request.POST.get('address')
-        parent_reltionship = request.POST.get('relationship')
+        parent_relationship = request.POST.get('relationship')
 
-        if Students.objects.filter(admission_no=admission_no).exists():
-            messages.error(request, 'Student with the same admission number already exists')
-            return redirect('addstudent')
-        
+        # Get the Classes instance corresponding to the class ID
+        student_class = Classes.objects.get(class_id=student_class)
+
+
 
         if image:
-            student = Students(first_name=first_name, last_name=last_name, student_gender=student_gender,
-            joining_date=joining_date, admission_no=admission_no, blood_group=blood_group, religion=religion, age=age,student_class=student_class, session=session, image=image, parent_name=parent_name, parent_email=parent_email, parent_phone=parent_phone, parent_address=parent_address, parent_relationship=parent_reltionship)
+        # Create the Students instance
+            student = Students(
+                first_name=first_name,
+                last_name=last_name,
+                student_gender=student_gender,
+                joining_date=joining_date,
+                admission_no=admission_no,
+                blood_group=blood_group,
+                religion=religion,
+                age=age,
+                student_class=student_class,  # Assign the Classes instance
+                session=session,
+                image=image,
+                parent_name=parent_name,
+                parent_email=parent_email,
+                parent_phone=parent_phone,
+                parent_address=parent_address,
+                parent_relationship=parent_relationship
+            )
             student.save()
             messages.success(request, 'Student added successfully')
-            return redirect(addstudent)
-
-
+            return redirect('addstudent')
         
         else:
             default_image_path = 'default.jpg'
-            student = Students(first_name=first_name, last_name=last_name, student_gender=student_gender,
-            joining_date=joining_date, admission_no=admission_no, blood_group=blood_group, religion=religion, age=age, student_class=student_class, session=session, image=default_image_path, parent_name=parent_name, parent_email=parent_email, parent_phone=parent_phone, parent_address=parent_address, parent_relationship=parent_reltionship)
+            student = Students(
+                first_name=first_name,
+                last_name=last_name,
+                student_gender=student_gender,
+                joining_date=joining_date,
+                admission_no=admission_no,
+                blood_group=blood_group,
+                religion=religion,
+                age=age,
+                student_class=student_class,  
+                session=session,
+                image=default_image_path,
+                parent_name=parent_name,
+                parent_email=parent_email,
+                parent_phone=parent_phone,
+                parent_address=parent_address,
+                parent_relationship=parent_relationship
+            )
             student.save()
-            
             messages.success(request, 'Student added successfully')
             return redirect('addstudent')
 
 
     else:
-        return render(request, 'add-student.html', {'classes': classes})
-    
-        
+        return render(request, 'students/add-student.html', {'classes': classes})
+
+
+
+
 def students(request):
     students = Students.objects.all()
     context = {'students': students}
-    return render(request, 'students.html', context)
+
+    return render(request, 'students/students.html', context)
 
 def student_details(request):
-    return render(request, 'student-details.html')
+    return render(request, 'students/student-details.html')
 
 def students_grid(request):
-    return render(request, 'students-grid.html')
+    students = Students.object.all()
+    context = {'students' : students}
+    return render(request, 'students/students-grid.html',context)
 
-def editstudent(request):
-    return render(request, 'edit-student.html')
+def editstudent(request, student_id):
+    try:
+        # Retrieve the student object
+        student = get_object_or_404(Students, student_id=student_id)
+    except Students.DoesNotExist:
+        messages.error(request, "Student does not exist.")
+        return redirect('students')  # Redirect to students page if student does not exist
+    return render(request, 'students/edit-student.html')
 
 def delete_student(request):
-    return render(request, 'delete-student.html')
+    return render(request, 'students/delete-student.html')
 

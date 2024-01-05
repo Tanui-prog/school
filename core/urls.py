@@ -30,10 +30,10 @@ urlpatterns = [
 
     path('students', views.students, name='students'),
     path('addstudent', views.addstudent, name='addstudent'),
-    path('editstudent', views.editstudent, name='editstudent'),
-    path('delete-student', views.delete_student, name='delete_student'),
+    path('editstudent/<int:student_id>/', views.editstudent, name='editstudent'),
+    path('deletestudent', views.delete_student, name='delete_student'),
     path('students_grid', views.students_grid, name='students_grid'),
-    path('student_details', views.student_details, name='student_details'),
+    path('student_details/<int:student_id>/', views.student_details, name='student_details'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

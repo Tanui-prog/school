@@ -7,7 +7,7 @@
             <div class="page-sub-header">
                 <h3 class="page-title">Students</h3>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="students.html">Student</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'students' %}">Student</a></li>
                     <li class="breadcrumb-item active">All Students</li>
                 </ul>
             </div>
@@ -50,13 +50,13 @@
                             <h3 class="page-title">Students</h3>
                         </div>
                         <div class="col-auto text-end float-end ms-auto download-grp">
-                            <a href="students.html" class="btn btn-outline-gray me-2 active"><i
+                            <a href="{% url 'students' %}" class="btn btn-outline-gray me-2 active"><i
                                     class="feather-list"></i></a>
-                            <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
+                            <a href="{% url 'students_grid' %}" class="btn btn-outline-gray me-2"><i
                                     class="feather-grid"></i></a>
                             <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
                                 Download</a>
-                            <a href="add-student.html" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                            <a href="{% url 'addstudent' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                         </div>
                     </div>
                 </div>
@@ -87,12 +87,15 @@
                                 <td>{{ student.admission_no }}</td>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a href="{% url 'editstudent'  %}" class="avatar avatar-sm me-2">
+                                        <a href="teacher-details.html" class="avatar avatar-sm me-2">
                                             {% if student.image %}
-                                            <img src="{{ student.image.url }}">
+                                                <img class="avatar-img rounded-circle" src="{{ student.image.url }}" alt="User Image">
+                                            {% else %}
+                                                 <!-- Display a default image or placeholder if no image is available  -->
+                                                <!-- <img class="avatar-img rounded-circle" src="{% static 'media/student_photos/default.jpg' %}" alt="Default Image">  -->
                                             {% endif %}
                                         </a>
-                                        <a href="student-details.html">{{ student.first_name }}
+                                        <a href="{% url 'student_details' student.student_id %}">{{ student.first_name }}
                                             {{ student.last_name }}</a>
                                     </h2>
                                 </td>
@@ -101,12 +104,12 @@
                                 <td>{{ student.parent_name }}</td>
                                 <td>{{ student.parent_phone }}</td>
                                 <td>{{ student.parent_address }}</td>
-                                <td class="text-end">
+                            <td class="text-end">
                                     <div class="actions ">
-                                        <a href="javascript:;" class="btn btn-sm bg-success-light me-2 ">
+                                        <a href="{% url 'student_details' student.student_id %}" class="btn btn-sm bg-success-light me-2 ">
                                             <i class="feather-eye"></i>
                                         </a>
-                                        <a href="edit-student.html" class="btn btn-sm bg-danger-light">
+                                        <a href="{% url 'editstudent' student.student_id %}" class="btn btn-sm bg-danger-light">
                                             <i class="feather-edit"></i>
                                         </a>
                                     </div>
