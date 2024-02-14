@@ -7,14 +7,14 @@
         <div class="col">
             <h3 class="page-title">Add Class</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="hostel.html">Classes</a></li>
+                <li class="breadcrumb-item"><a href="classes">Classes</a></li>
                 <li class="breadcrumb-item active">Add Class</li>
             </ul>
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-bottom: 200px;">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
@@ -25,13 +25,13 @@
                 {% endif %}
 
                 {% if messages %}
-                <ul class="messages">
+                <ul class="alert alert-info" style="color:rgb(0, 0, 0);text-align: center;font-size: 20px;">
                     {% for message in messages %}
                     <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
                         {% endfor %}
                 </ul>
                 {% endif %}
-                <form action="" method="post">
+                <form action="add_class" method="post">
 
                     {% csrf_token %}
                     <div class="row">
@@ -41,14 +41,14 @@
                         <div class="col-12 col-sm-4">
                             <div class="form-group local-forms">
                                 <label>Grade No <span class="login-danger">*</span></label>
-                                <input type="number" name="grade" required class="form-control">
+                                <input type="number" name="grade" class="form-control" required min="1">
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="form-group local-forms">
                                 <label>Stream <span class="login-danger">*</span></label>
                                 <select class="form-control select" name="stream" required>
-                                    <option>Select Stream/option>
+                                    <option>Select Stream</option>
                                     <option>East</option>
                                     <option>West</option>
                                     <option>North</option>
@@ -59,7 +59,7 @@
 
                         <div class="col-12">
                             <div class="student-submit">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Add Class</button>
                             </div>
                         </div>
                     </div>

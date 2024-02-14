@@ -12,21 +12,21 @@ def index(request):
 
 def add_class(request):
     if request.method == 'POST':
-        form = Class(request.POST)
-        if form.is_valid():
-            grade = request.POST["grade"]
-            stream = request.POST["stream"]
+        grade = request.POST.get("grade")
+        stream = request.POST.get("stream")
         
-            Class = Class(grade=grade, stream=stream)
-            Class.save()
-        
-            messages.success(request, 'Class added successfully')
+        # Check if class already exists
+        if Class.objects.filter(grade=grade, stream=stream).exists():
+            messages.error(request, 'Class already exists')
             return redirect('add_class')
-    
+        else:
+            # If class does not exist, save it
+            Class.objects.create(grade=grade, stream=stream)
+            messages.success(request, 'Class added successfully')
+            return redirect('add_class')  # Redirect to the same page after adding a class
+
     else:
         return render(request, 'add-class.html', {'message': 'Please fill in the class details'})
-
-
 
 def classes(request):
     classes = Class.objects.all()
@@ -36,6 +36,10 @@ def classes(request):
     return render(request, 'classes.html', context)
     
 
+
+def edit_class(request, class_id):
+    classes_ = Class.objects.get(class_id=class_id)
+    return render(request, 'edit-class.html', {'classes': classes_})
 
 
 

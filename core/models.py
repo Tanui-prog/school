@@ -9,9 +9,11 @@ class Subject(models.Model):
 
     def __str__(self):
         return f"{self.subject_id}: {self.subject_name}"
+    
+
 class Class(models.Model):
     class_id = models.AutoField(primary_key=True)
-    grade = models.IntegerField(max_length=10)
+    grade = models.IntegerField()
     stream = models.CharField(max_length=10)
 
     def __str__(self):
