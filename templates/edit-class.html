@@ -7,19 +7,24 @@
         <div class="col">
             <h3 class="page-title">Edit Class</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="classes">Classes</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'classes' %}">Classes</a></li>
                 <li class="breadcrumb-item active">Edit class</li>
             </ul>
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-bottom: 200px;">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <form action="" method="post" >
-
+                {% for message in messages %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                <form action="{% url 'saveclass' class.class_id %}" method="post">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-12">
@@ -28,25 +33,25 @@
                         <div class="col-12 col-sm-4">
                             <div class="form-group local-forms">
                                 <label>Grade No <span class="login-danger">*</span></label>
-                                <input type="number" class="form-control">
+                                <input type="number" class="form-control" name="grade" value="{{ class.grade }}">
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="form-group local-forms">
                                 <label>Stream <span class="login-danger">*</span></label>
-                                <select class="form-control select">
-                                    <option>Select Stream/option>
-                                    <option>East</option>
-                                    <option>West</option>
-                                    <option>North</option>
-                                    <option>South</option>
+                                <select class="form-control select" name="stream">
+                                    <option>Select Stream</option>
+                                    <option {% if class.stream == 'East' %} selected {% endif %}>East</option>
+                                    <option {% if class.stream == 'West' %} selected {% endif %}>West</option>
+                                    <option {% if class.stream == 'North' %} selected {% endif %}>North</option>
+                                    <option {% if class.stream == 'South' %} selected {% endif %}>South</option>
                                 </select>
                             </div>
                         </div>
                     
                         <div class="col-12">
                             <div class="student-submit">
-                                <button type="Update class" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Update Class</button>
                             </div>
                         </div>
                     </div>
