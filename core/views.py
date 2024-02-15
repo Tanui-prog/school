@@ -4,11 +4,7 @@ from django.shortcuts import redirect
 from .models import Subject, Class
 from django.contrib import messages
 
-# Create your views here.
-def index(request):
-    return render(request, 'index.html')
 
-# Classes
 
 def add_class(request):
     if request.method == 'POST':
@@ -28,6 +24,13 @@ def add_class(request):
 
     else:
         return render(request, 'add-class.html', {'message': 'Please fill in the class details'})
+# Create your views here.
+def index(request):
+    return render(request, 'index.html')
+
+# Classes
+
+
 
 def classes(request):
     classes = Class.objects.all()
