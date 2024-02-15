@@ -6,6 +6,25 @@ from django.contrib import messages
 
 
 
+
+# Create your views here.
+def index(request):
+    return render(request, 'index.html')
+
+# Classes
+
+
+
+def classes(request):
+    classes = Class.objects.all()
+    context = {
+        'classes': classes
+    }
+    return render(request, 'classes.html', context)
+    
+
+
+
 def add_class(request):
     if request.method == 'POST':
         grade = request.POST.get("grade")
@@ -24,22 +43,7 @@ def add_class(request):
 
     else:
         return render(request, 'add-class.html', {'message': 'Please fill in the class details'})
-# Create your views here.
-def index(request):
-    return render(request, 'index.html')
-
-# Classes
-
-
-
-def classes(request):
-    classes = Class.objects.all()
-    context = {
-        'classes': classes
-    }
-    return render(request, 'classes.html', context)
     
-
 def saveclass(request, class_id):
     try:
         # Retrieve the class object
