@@ -23,7 +23,8 @@ def add_class(request):
             # If class does not exist, save it
             Class.objects.create(grade=grade, stream=stream)
             messages.success(request, 'Class added successfully')
-            return redirect('add_class')  # Redirect to the same page after adding a class
+            return redirect('add_class')  
+        # Redirect to the same page after adding a class
 
     else:
         return render(request, 'add-class.html', {'message': 'Please fill in the class details'})
