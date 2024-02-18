@@ -19,7 +19,15 @@
         <div class="card">
             <div class="card-body">
 
-                <form method="post" enctype="multipart/form-data">
+                {% if messages %}
+                <ul class="alert alert-info" style="color:rgb(0, 0, 0);text-align: center;font-size: 20px;">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                        {% endfor %}
+                </ul>
+                {% endif %}
+
+                <form method="post" action="addsubject" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-12">
@@ -27,39 +35,34 @@
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="form-group local-forms">
-                                <label>Subject ID <span class="login-danger">*</span></label>
-                                <input type="text" class="form-control" name="subject_id">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4">
-                            <div class="form-group local-forms">
                                 <label>Subject Name <span class="login-danger">*</span></label>
-                                <input type="text" class="form-control" name="subject_name">
+                                <input type="text" class="form-control" name="subject_name" pattern="[A-Za-z\s]+" title="Please enter alphabetic characters only">
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="form-group local-forms">
-                                <label>Class <span class="login-danger">*</span></label>
-                                <input type="text" name="subject_class" class="form-control">
+                                <label>Select Class <span class="login-danger">*</span></label>
+                                <select name="subject_class" class="form-control">
+                                    <option value="">Select a Class</option> <!-- Default option -->
+                                    {% for class in classes %}
+                                        {% if class.selected %}
+                                            <option value="{{ class.class_id }}" selected>{{ class.grade }}  {{ class.stream }}</option>
+                                        {% else %}
+                                            <option value="{{ class.class_id }}">{{ class.grade }}  {{ class.stream }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
+                        
                         <div class="col-12">
                             <div class="student-submit">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
-                        {% if messages %}
-                        <div class="messages">
-                            {% for message in messages %}
-                            <div class="{{ message.tags }}">
-                                {{ message }}
-                            </div>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-
                     </div>
                 </form>
+                
             </div>
         </div>
     </div>

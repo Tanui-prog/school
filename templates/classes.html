@@ -47,12 +47,13 @@
                                 <td>{{ class.stream }}</td>
                                 <td class="text-end">
                                     <div class="actions">
-                                        <button class="btn btn-sm bg-success-light me-2 delete-class-btn" data-class-id="{{ class.class_id }}">
-                                            <i class="fas fa-trash-alt delete-symbol"></i>
-                                        </button>
+                                        
                                         <a href="{% url 'saveclass' class.class_id %}" class="btn btn-sm bg-danger-light">
                                             <i class="feather-edit"></i>
                                         </a>
+                                        <button class="btn btn-sm bg-success-light me-2 delete-class-btn" data-class-id="{{ class.class_id }}">
+                                            <i class="fas fa-trash-alt delete-symbol"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
