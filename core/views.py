@@ -163,7 +163,17 @@ def editsubject(request, subject_id):
 
 
 
-def delete_subject(request, subject_id):
-    subject = get_object_or_404(Subject, pk=subject_id)
-    subject.delete()
-    return ({'message': 'Subject deleted successfully'})
+def  delete_subject(request, subject_id):
+    subject_obj = get_object_or_404(Subject, subject_id=subject_id)
+    subject_obj.delete()
+    return redirect('subjects')
+
+
+#teachers
+
+def teachers(request):
+    return render(request, 'teachers.html')
+
+
+def addteacher(request):
+    return render(request, 'add-teacher.html')

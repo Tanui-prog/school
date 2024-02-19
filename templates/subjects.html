@@ -85,9 +85,13 @@
                                                         <a href="{% url 'editsubject' subject.subject_id %}" class="btn btn-sm bg-danger-light">
                                                             <i class="feather-edit"></i>
                                                         </a>
-                                                        <a href="{% url 'delete_subject' subject.subject_id %}" class="btn btn-sm bg-success-light me-2 delete-class-btn">
+                                                        
+                                                        <a href="{% url 'delete_subject' subject.subject_id %}" class="btn btn-sm bg-success-light me-2 delete-class-btn" onclick="return confirmDelete();">
                                                             <i class="fas fa-trash-alt delete-symbol"></i>
                                                         </a>
+                                                        
+                                                        
+                                                        </a> 
                                                         
                                                         
                                                     </div>
@@ -102,7 +106,13 @@
                         </div>
                     </div>
                 </div>
-                
+ 
+ <script>
+    function confirmDelete() {
+    var confirmDelete = confirm("Are you sure you want to delete this subject?");
+    return confirmDelete;
+}
+ </script>
                 
 {% endblock %}
                 
