@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from .models import Subject, Class
@@ -160,3 +160,10 @@ def editsubject(request, subject_id):
     else:
         # If not POST, render edit form
         return render(request, 'edit-subject.html', {'subject': subject_obj, 'classes': Class.objects.all()})  # Pass all classes to the template
+
+
+
+def delete_subject(request, subject_id):
+    subject = get_object_or_404(Subject, pk=subject_id)
+    subject.delete()
+    return ({'message': 'Subject deleted successfully'})
