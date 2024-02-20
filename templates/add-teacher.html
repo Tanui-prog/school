@@ -1,151 +1,168 @@
-{% extends 'base.html' %}
-{% load static%}
+{% extends "base.html" %}
+{% load static %}
 {% block content %}
-                <div class="page-header">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h3 class="page-title">Add Teachers</h3>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="teachers.html">Teachers</a></li>
-                                <li class="breadcrumb-item active">Add Teachers</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Add Teachers</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="teachers.html">Teachers</a></li>
+                <li class="breadcrumb-item active">Add Teachers</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h5 class="form-title"><span>Basic Details</span></h5>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Teacher ID <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Teacher ID">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Name <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Enter Name">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Gender <span class="login-danger">*</span></label>
-                                                <select class="form-control select">
-                                                    <option>Male</option>
-                                                    <option>Female</option>
-                                                    <option>Others</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms calendar-icon">
-                                                <label>Date Of Birth <span class="login-danger">*</span></label>
-                                                <input class="form-control datetimepicker" type="text"
-                                                    placeholder="DD-MM-YYYY">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Mobile <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Enter Phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms calendar-icon">
-                                                <label>Joining Date <span class="login-danger">*</span></label>
-                                                <input class="form-control datetimepicker" type="text"
-                                                    placeholder="DD-MM-YYYY">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4 local-forms">
-                                            <div class="form-group">
-                                                <label>Qualification <span class="login-danger">*</span></label>
-                                                <input class="form-control" type="text"
-                                                    placeholder="Enter Joining Date">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Experience <span class="login-danger">*</span></label>
-                                                <input class="form-control" type="text" placeholder="Enter Experience">
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <h5 class="form-title"><span>Login Details</span></h5>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Username <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Enter Username">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Email ID <span class="login-danger">*</span></label>
-                                                <input type="email" class="form-control" placeholder="Enter Mail Id">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Password <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Enter Password">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Repeat Password <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Repeat Password">
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <h5 class="form-title"><span>Address</span></h5>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group local-forms">
-                                                <label>Address <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Enter address">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>City <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Enter City">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>State <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Enter State">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Zip Code <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Enter Zip">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Country <span class="login-danger">*</span></label>
-                                                <input type="text" class="form-control" placeholder="Enter Country">
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="student-submit">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+
+                {% if messages %}
+                <ul class="alert alert-info" style="color:rgb(0, 0, 0);text-align: center;font-size: 20px;">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                        {% endfor %}
+                </ul>
+                {% endif %}
+                <form method="post" action="addteacher">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Basic Details</span></h5>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Teacher ID No <span class="login-danger">*</span></label>
+                                <input type="text" name="identity_number" class="form-control" placeholder="Teacher ID"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Name <span class="login-danger">*</span></label>
+                                <input type="text" name="teacher_name" class="form-control" placeholder="Enter Name"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Gender <span class="login-danger">*</span></label>
+                                <select name="teacher_gender" class="form-control select" required>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms ">
+                                <label>Age <span class="login-danger">*</span></label>
+                                <input name="age" class="form-control " type="number" placeholder="Age in numbers"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Mobile <span class="login-danger">*</span></label>
+                                <input type="text" name="phone_number" class="form-control" placeholder="Enter Phone"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms calendar-icon">
+                                <label>Joining Date <span class="login-danger">*</span></label>
+                                <input name="joining_date" class="form-control datetimepicker" type="text"
+                                    placeholder="DD-MM-YYYY" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4 local-forms">
+                            <div class="form-group">
+                                <label>Qualification <span class="login-danger">*</span></label>
+                                <input name="qualification" class="form-control" type="text"
+                                    placeholder="Enter Qualification" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Experience <span class="login-danger">*</span></label>
+                                <input name="experience" class="form-control" type="text" placeholder="Enter Experience"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Email address <span class="login-danger">*</span></label>
+                                <input type="email" name="teacher_email" class="form-control" placeholder="Enter Email"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Address</span></h5>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group local-forms">
+                                <label>Address <span class="login-danger">*</span></label>
+                                <input name="address" type="text" class="form-control" placeholder="Enter address"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>City <span class="login-danger">*</span></label>
+                                <input name="city" type="text" class="form-control" placeholder="Enter City" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>County <span class="login-danger">*</span></label>
+                                <input type="text" class="form-control" name="county" placeholder="Enter State" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Zip Code <span class="login-danger">*</span></label>
+                                <input type="text" name="zip_code" class="form-control" placeholder="Enter Zip">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Country <span class="login-danger">*</span></label>
+                                <input type="text" class="form-control" name="country" placeholder="Enter Country">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Other Details</span></h5>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Teacher registration No. <span class="login-danger">*</span></label>
+                                <input name="tsc_no" type="text" class="form-control"
+                                    placeholder="Enter Teacher registration No.">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Subject Combinations <span class="login-danger">*</span></label>
+                                <input type="text" name="subject_combinations" class="form-control"
+                                    placeholder="Enter subject combinations">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="student-submit">
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 {% endblock %}

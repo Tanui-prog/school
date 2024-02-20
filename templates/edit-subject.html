@@ -42,11 +42,12 @@
                                                       {% if class == subject.subject_class %}
                                                       
                                                         <option value="{{class.class_id}}" selected>{{class.class_name}}</option>
+                                                       
                                                       
                                                       {% else %}
                                                 
-                                                        <option value="hi">hi</option>
-                                                      
+                                                        
+                                                       <option value="{{class.class_id}}">{{class.class_name}}</option>
                                                       {% endif %}
                                                 
                                                     {% endfor %}

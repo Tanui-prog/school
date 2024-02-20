@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
-from .models import Subject, Class
+from .models import Subject, Class, Teacher
 from django.contrib import messages
 
 
@@ -10,6 +10,9 @@ from django.contrib import messages
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
+
+
+
 
 
 
@@ -123,7 +126,7 @@ def  subjects(request):
     subjects = Subject.objects.all()
     context = {'subjects': subjects}
     return render(request,'subjects.html',context)
-
+ 
 
 def editsubject(request, subject_id):
     try:
@@ -169,6 +172,7 @@ def  delete_subject(request, subject_id):
     return redirect('subjects')
 
 
+
 #teachers
 
 def teachers(request):
@@ -176,4 +180,34 @@ def teachers(request):
 
 
 def addteacher(request):
-    return render(request, 'add-teacher.html')
+    if request.method == 'POST':
+        identity_number = request.POST.get('identity_number')
+        teacher_name = request.POST.get('teacher_name')
+        teacher_gender = request.POST.get('teacher_gender')
+        teacher_email = request.POST.get('teacher_email')
+        teacher_phone = request.POST.get('phone_number')
+        age = request.POST.get('age')
+        joinin_date = request.POST.get('joinin_date')
+        qualification = request.POST.get('qualification')
+        experience = request.POST.get('experience')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        county = request.POST.get('county')
+        country = request.POST.get('country')
+        zip_code = request.POST.get('zip_code')
+        tsc_no = request.POST.get('tsc_no')
+        subject_combination = request.POST.get('subject_combination')
+
+
+        if Teacher.objects.filter(identity_number=identity_number, tsc_no = tsc_no).exists():
+            messages.error(request, 'Teacher with the same identity number already exists')
+            return redirect('addteacher')
+        
+        else:
+            Teacher.objects.create(identity_number=identity_number, teacher_name=teacher_name, teacher_gender=teacher_gender,
+            teacher_email=teacher_email, teacher_phone=teacher_phone, age=age, joinin_date=joinin_date, qualification=qualification,
+            experience=experience, address=address, city=city, county=county, country=country, zip_code=zip_code, tsc_no=tsc_no, subject_combination=subject_combination)
+        messages.success(request, 'Teacher added successfully')
+        return redirect('addteacher')
+    else:
+        return render(request, 'add-teacher.html')
