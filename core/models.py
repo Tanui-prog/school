@@ -38,7 +38,7 @@ class Teacher(models.Model):
     teacher_email = models.EmailField()
     teacher_phone = models.CharField(max_length=20)
     age = models.IntegerField()
-    joinin_date = models.DateField()
+    joinin_date = models.CharField(max_length=20) 
     qualification = models.CharField(max_length=100)
     experience = models.CharField(max_length=100)
     address = models.CharField(max_length=255)

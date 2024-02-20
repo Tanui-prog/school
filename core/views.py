@@ -175,8 +175,6 @@ def  delete_subject(request, subject_id):
 
 #teachers
 
-def teachers(request):
-    return render(request, 'teachers.html')
 
 
 def addteacher(request):
@@ -187,7 +185,7 @@ def addteacher(request):
         teacher_email = request.POST.get('teacher_email')
         teacher_phone = request.POST.get('phone_number')
         age = request.POST.get('age')
-        joinin_date = request.POST.get('joinin_date')
+        joinin_date = request.POST.get('joining_date')
         qualification = request.POST.get('qualification')
         experience = request.POST.get('experience')
         address = request.POST.get('address')
@@ -196,7 +194,7 @@ def addteacher(request):
         country = request.POST.get('country')
         zip_code = request.POST.get('zip_code')
         tsc_no = request.POST.get('tsc_no')
-        subject_combination = request.POST.get('subject_combination')
+        subject_combination = request.POST.get('subject_combinations')
 
 
         if Teacher.objects.filter(identity_number=identity_number, tsc_no = tsc_no).exists():
@@ -211,3 +209,11 @@ def addteacher(request):
         return redirect('addteacher')
     else:
         return render(request, 'add-teacher.html')
+    
+
+
+
+def teachers(request):
+    teachers = Teacher.objects.all()
+    context = {'teachers': teachers}
+    return render(request, 'teachers.html',context)
