@@ -51,3 +51,25 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.teacher_name
+    
+class Students(models.Model):
+    student_id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    student_gender = models.CharField(max_length=10)
+    joining_date = models.DateField()
+    admission_no = models.CharField(max_length=20, unique=True)
+    blood_group = models.CharField(max_length=5)
+    religion = models.CharField(max_length=50)
+    age = models.IntegerField()
+    Class = models.CharField(max_length=50)
+    session = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='student_photos/', default='default.jpg')
+    parent_name = models.CharField(max_length=100)
+    parent_email = models.EmailField()
+    parent_phone = models.CharField(max_length=15)
+    parent_address = models.TextField()
+    parent_relationship = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

@@ -7,7 +7,7 @@
                             <div class="col">
                                 <h3 class="page-title">Teachers</h3>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="home">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Teachers</li>
                                 </ul>
                             </div>
@@ -51,11 +51,11 @@
                                             <div class="col-auto text-end float-end ms-auto download-grp">
                                                 <a href="teachers.html" class="btn btn-outline-gray me-2 active"><i
                                                         class="feather-list"></i></a>
-                                                <a href="teachers-grid.html" class="btn btn-outline-gray me-2"><i
+                                                <a href="teachers_grid" class="btn btn-outline-gray me-2"><i
                                                         class="feather-grid"></i></a>
                                                 <a href="#" class="btn btn-outline-primary me-2"><i
                                                         class="fas fa-download"></i> Download</a>
-                                                <a href="add-teacher.html" class="btn btn-primary"><i
+                                                <a href="{% url 'addteacher' %}" class="btn btn-primary"><i
                                                         class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
@@ -100,21 +100,37 @@
                                                             <a href="teacher-details.html">Aaliyah</a>
                                                         </h2>
                                                     </td> -->
+                                                    
                                                     <td>{{teacher.teacher_name}}</td>
                                                     <td>{{teacher.teacher_gender}}</td>
                                                     <td>{{teacher.teacher_email}}</td>
                                                     <td>{{teacher.teacher_phone}}</td>
                                                     <td>{{teacher.age}}</td>
                                                     <td>{{teacher.joinin_date}}</td>
+                                                    <td>{{teacher.qualification}}</td>
+                                                    <td>{{teacher.experience}}</td>
+                                                    <td>{{teacher.address}}</td>
+                                                    <td>{{teacher.city}}</td>
+                                                    <td>{{teacher.zip_code}}</td>
+                                                    <td>{{teacher.county}}</td>
+                                                    <td>{{teacher.country}}</td>
+                                                    <td>{{teacher.tsc_no}}</td>
+                                                    <td>{{teacher.subject_combination}}</td>
+
+
                                                     <td class="text-end">
                                                         <div class="actions">
-                                                            <a href="javascript:;"
+                                                            <!-- <a href="javascript:;"
                                                                 class="btn btn-sm bg-success-light me-2">
                                                                 <i class="feather-eye"></i>
-                                                            </a>
-                                                            <a href="edit-teacher.html"
+                                                            </a> -->
+                                                            <a href="{% url 'editteacher' teacher.teacher_id %}"
                                                                 class="btn btn-sm bg-danger-light">
                                                                 <i class="feather-edit"></i>
+                                                
+                                                            </a>
+                                                            <a href="{% url 'delete_teacher' teacher.teacher_id %}" class="btn btn-sm bg-success-light me-2 delete-class-btn" onclick="return confirmDelete();">
+                                                                <i class="fas fa-trash-alt delete-symbol"></i>
                                                             </a>
                                                         </div>
                                                     </td>
@@ -131,4 +147,12 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <script>
+                        function confirmDelete() {
+                        var confirmDelete = confirm("Are you sure you want to delete this Teacher?");
+                        return confirmDelete;
+                    }
+                     </script>
 {% endblock %}               

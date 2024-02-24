@@ -1,14 +1,15 @@
+
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
-from .models import Subject, Class, Teacher
+from .models import Subject, Class, Teacher, Students
 from django.contrib import messages
 
 
 
 
 # Create your views here.
-def index(request):
+def home(request):
     return render(request, 'index.html')
 
 
@@ -211,9 +212,146 @@ def addteacher(request):
         return render(request, 'add-teacher.html')
     
 
-
-
 def teachers(request):
     teachers = Teacher.objects.all()
     context = {'teachers': teachers}
     return render(request, 'teachers.html',context)
+
+
+def  delete_teacher(request, teacher_id):
+    teacher_obj = get_object_or_404(Teacher, teacher_id=teacher_id)
+    teacher_obj.delete()
+    return redirect('teachers')
+
+
+def editteacher(request, teacher_id):
+
+    try:
+        # Retrieve the teacher object
+        teacher = get_object_or_404(Teacher, teacher_id=teacher_id)
+    except Teacher.DoesNotExist:
+        messages.error(request, "Teacher does not exist.")
+        return redirect('teachers')  # Redirect to teachers page if teacher does not exist
+
+    if request.method == 'POST':
+        # Get form data
+        identity_number = request.POST.get('identity_number')
+        teacher_name = request.POST.get('teacher_name')
+        teacher_gender = request.POST.get('teacher_gender')
+        age = request.POST.get('age')
+        teacher_phone = request.POST.get('phone_number')
+        joinin_date = request.POST.get('joining_date')
+        qualification = request.POST.get('qualification')
+        experience = request.POST.get('experience')
+        teacher_email = request.POST.get('teacher_email')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        county = request.POST.get('county')
+        zip_code = request.POST.get('zip_code')
+        country = request.POST.get('country')
+        tsc_no = request.POST.get('tsc_no')
+        subject_combination = request.POST.get('subject_combination')
+
+        # Check if the submitted teacher details are unique
+        if Teacher.objects.exclude(teacher_id=teacher_id).filter(identity_number=identity_number).exists():
+            messages.error(request, "Another teacher with the same identity number already exists.")
+            return render(request, 'edit-teacher.html', {'teacher': teacher})  # Render the edit form with error message
+
+        # Update teacher object
+        teacher.identity_number = identity_number
+        teacher.teacher_name = teacher_name
+        teacher.teacher_gender = teacher_gender
+        teacher.age = age
+        teacher.teacher_phone = teacher_phone
+        teacher.joinin_date = joinin_date
+        teacher.qualification = qualification
+        teacher.experience = experience
+        teacher.teacher_email = teacher_email
+        teacher.address = address
+        teacher.city = city
+        teacher.county = county
+        teacher.zip_code = zip_code
+        teacher.country = country
+        teacher.tsc_no = tsc_no
+        teacher.subject_combination = subject_combination
+        teacher.save()
+
+        messages.success(request, "Teacher details updated successfully.")
+        return redirect('editteacher', teacher_id=teacher_id) 
+
+    else:
+        # If not POST, render edit form
+        return render(request, 'edit-teacher.html', {'teacher': teacher})
+    
+
+def  teachers_grid(request):
+    teachers = Teacher.objects.all()
+    context = {'teachers': teachers}
+    return render(request, 'teachers-grid.html', context)
+
+
+def teacher_details(request):
+
+    teacher = Teacher.objects.all()
+    context = {'teacher': teacher}
+    return render(request, 'teacher-details.html', context)
+
+
+
+# students
+
+
+
+def addstudent(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        student_gender = request.POST.get('gender')
+        joining_date = request.POST.get('joining_date')
+        admission_no = request.POST.get('admission_no')
+        blood_group = request.POST.get('blood_group')
+        religion = request.POST.get('religion')
+        age = request.POST.get('age')
+        Class = request.POST.get('classstream')
+        session = request.POST.get('session')
+        image = request.FILES.get('profile_picture') 
+        parent_name = request.POST.get('parent_name')
+        parent_email = request.POST.get('parent_email')
+        parent_phone = request.POST.get('parent_phone')
+        parent_address = request.POST.get('address')
+        parent_reltionship = request.POST.get('relationship')
+
+        if Students.objects.filter(admission_no=admission_no).exists():
+            messages.error(request, 'Student with the same admission number already exists')
+            return redirect('addstudent')
+        
+        else:
+            student = Students(first_name=first_name, last_name=last_name, student_gender=student_gender,
+            joining_date=joining_date, admission_no=admission_no, blood_group=blood_group, religion=religion, age=age, Class=Class, session=session, image=image, parent_name=parent_name, parent_email=parent_email, parent_phone=parent_phone, parent_address=parent_address, parent_relationship=parent_reltionship)
+            student.save()
+            
+            messages.success(request, 'Student added successfully')
+            return redirect('addstudent')
+    
+    
+    else:
+        return render(request, 'add-student.html')
+    
+        
+def students(request):
+    students = Students.objects.all()
+    context = {'students': students}
+    return render(request, 'students.html', context)
+
+def student_details(request):
+    return render(request, 'student-details.html')
+
+def students_grid(request):
+    return render(request, 'students-grid.html')
+
+def editstudent(request):
+    return render(request, 'edit-student.html')
+
+def delete_student(request):
+    return render(request, 'delete-student.html')
+
