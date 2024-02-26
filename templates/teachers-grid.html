@@ -49,8 +49,11 @@
                 <div class="student-box flex-fill">
                     <div class="student-img">
                         <a href="student-details.html">
-                            <img class="img-fluid" alt="Students Info"
-                                src="{% static 'assets/img/profiles/avatar-03.jpg'%}">
+                            {% if teacher.profile_picture %}
+                            <img style="max-height: 200px;max-width: 200px;" class="img-fluid" alt="Students Info"
+                            src="{{ teacher.profile_picture.url }}">
+
+                              {% endif %}
                         </a>
                     </div>
                     <div class="student-content pb-0">

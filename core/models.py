@@ -19,16 +19,6 @@ class Subject(models.Model):
         return f"{self.subject_id}: {self.subject_name} - {self.subject_class}"
 
 
-class Teacher(models.Model):
-    teacher_id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.subject}"
-    
-
 
 class Teacher(models.Model):
     teacher_id = models.AutoField(primary_key=True)
@@ -37,6 +27,7 @@ class Teacher(models.Model):
     teacher_gender = models.CharField(max_length=10)
     teacher_email = models.EmailField()
     teacher_phone = models.CharField(max_length=20)
+    profile_picture = models.ImageField(upload_to='teacher_photos/', default='default.jpg')
     age = models.IntegerField()
     joinin_date = models.CharField(max_length=20) 
     qualification = models.CharField(max_length=100)

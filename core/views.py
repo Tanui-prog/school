@@ -1,4 +1,6 @@
 
+import os
+from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
@@ -185,6 +187,7 @@ def addteacher(request):
         teacher_gender = request.POST.get('teacher_gender')
         teacher_email = request.POST.get('teacher_email')
         teacher_phone = request.POST.get('phone_number')
+        profile_picture = request.FILES.get('profile_picture')
         age = request.POST.get('age')
         joinin_date = request.POST.get('joining_date')
         qualification = request.POST.get('qualification')
@@ -197,20 +200,32 @@ def addteacher(request):
         tsc_no = request.POST.get('tsc_no')
         subject_combination = request.POST.get('subject_combinations')
 
-
-        if Teacher.objects.filter(identity_number=identity_number, tsc_no = tsc_no).exists():
+        if Teacher.objects.filter(identity_number=identity_number, tsc_no=tsc_no).exists():
             messages.error(request, 'Teacher with the same identity number already exists')
             return redirect('addteacher')
         
         else:
-            Teacher.objects.create(identity_number=identity_number, teacher_name=teacher_name, teacher_gender=teacher_gender,
-            teacher_email=teacher_email, teacher_phone=teacher_phone, age=age, joinin_date=joinin_date, qualification=qualification,
-            experience=experience, address=address, city=city, county=county, country=country, zip_code=zip_code, tsc_no=tsc_no, subject_combination=subject_combination)
+            # Check if profile_picture is empty
+            if profile_picture is not None:
+                Teacher.objects.create(identity_number=identity_number, teacher_name=teacher_name, teacher_gender=teacher_gender,
+                                        teacher_email=teacher_email, teacher_phone=teacher_phone, age=age, joinin_date=joinin_date,
+                                        qualification=qualification, experience=experience, profile_picture=profile_picture,
+                                        address=address, city=city, county=county, country=country, zip_code=zip_code, tsc_no=tsc_no,
+                                        subject_combination=subject_combination)
+            else:
+                # Assign default image path from main media folder
+                default_image_path = os.path.join(settings.MEDIA_ROOT, 'default.jpg')
+                Teacher.objects.create(identity_number=identity_number, teacher_name=teacher_name, teacher_gender=teacher_gender,
+                                        teacher_email=teacher_email, teacher_phone=teacher_phone, age=age, joinin_date=joinin_date,
+                                        qualification=qualification, experience=experience, profile_picture=default_image_path,
+                                        address=address, city=city, county=county, country=country, zip_code=zip_code, tsc_no=tsc_no,
+                                        subject_combination=subject_combination)
         messages.success(request, 'Teacher added successfully')
         return redirect('addteacher')
     else:
         return render(request, 'add-teacher.html')
-    
+
+
 
 def teachers(request):
     teachers = Teacher.objects.all()
@@ -314,6 +329,7 @@ def addstudent(request):
         age = request.POST.get('age')
         Class = request.POST.get('classstream')
         session = request.POST.get('session')
+
         image = request.FILES.get('profile_picture') 
         parent_name = request.POST.get('parent_name')
         parent_email = request.POST.get('parent_email')
@@ -326,6 +342,7 @@ def addstudent(request):
             return redirect('addstudent')
         
         else:
+            
             student = Students(first_name=first_name, last_name=last_name, student_gender=student_gender,
             joining_date=joining_date, admission_no=admission_no, blood_group=blood_group, religion=religion, age=age, Class=Class, session=session, image=image, parent_name=parent_name, parent_email=parent_email, parent_phone=parent_phone, parent_address=parent_address, parent_relationship=parent_reltionship)
             student.save()
