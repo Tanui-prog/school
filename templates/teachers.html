@@ -85,11 +85,9 @@
                                                     <td>
                                                         <h2 class="table-avatar">
                                                             <a href="teacher-details.html" class="avatar avatar-sm me-2">
-                                                                {% if teacher.image %}
+                                                                
                                                                     <img class="avatar-img rounded-circle" src="{{ teacher.image.url }}" alt="User Image">
-                                                                {% else %}
-                                                                    <img class="avatar-img rounded-circle" src="{% static 'media/default.jpg' %}" alt="Default Image">
-                                                                {% endif %}
+                                                 
                                                             </a>
                                                             <a href="teacher-details.html">{{ teacher.teacher_name }}</a>
                                                         </h2>

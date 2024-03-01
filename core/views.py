@@ -309,7 +309,11 @@ def teacher_details(request,teacher_id):
 
 
 def addstudent(request):
+    classes = Class.objects.all()
+    
     if request.method == 'POST':
+       
+    
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         student_gender = request.POST.get('gender')
@@ -340,10 +344,10 @@ def addstudent(request):
             
             messages.success(request, 'Student added successfully')
             return redirect('addstudent')
-    
-    
+
+
     else:
-        return render(request, 'add-student.html')
+        return render(request, 'add-student.html' , {'classes': classes})
     
         
 def students(request):

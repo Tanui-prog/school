@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class Class(models.Model):
     class_id = models.AutoField(primary_key=True)
     grade = models.IntegerField()
@@ -39,6 +40,11 @@ class Teacher(models.Model):
     tsc_no = models.CharField(max_length=20)
     subject_combination = models.CharField(max_length=255)
 
+    def getImage(self):
+        if not self.image:
+            # depending on your template
+            return default_path or default_image_object
+
     def __str__(self):
         return self.teacher_name
     
@@ -52,7 +58,7 @@ class Students(models.Model):
     blood_group = models.CharField(max_length=5)
     religion = models.CharField(max_length=50)
     age = models.IntegerField()
-    Class = models.CharField(max_length=50)
+    Class = models.ForeignKey(Class, on_delete=models.SET_NULL, null=True, default=None)
     session = models.CharField(max_length=50)
     image = models.ImageField(upload_to='student_photos/', default='default.jpg')
     parent_name = models.CharField(max_length=100)
