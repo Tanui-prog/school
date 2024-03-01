@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block content %}
-
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
@@ -66,64 +65,53 @@
                                             class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
                                             <thead class="student-thread">
                                                 <tr>
-                                                    <th>ID Number</th>
+
+                            
                                                     <th>Name</th>
-                                                    <th>Gender</th>
+                                                    
                                                     <th>Email</th>
-                                                    <th>Phone Number</th>
-                                                    <th>Age</th>
-                                                    <th>Joining Date</th>
+                                                    <th>Phone Number</th>     
                                                     <th>Qualification</th>
-                                                    <th>Experience</th>
-                                                    <th>Address</th>
-                                                    <th>City</th>
-                                                    <th>Zip Code </th>
-                                                    <th>County</th>
-                                                    <th>Country</th> 
                                                     <th>Tsc No</th>
                                                     <th>Subject Combinations </th>
                                                     <th class="text-end">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                <tr >
                                                     {% for teacher in teachers %}
-                                                    <td>{{teacher.identity_number}}
-                                                    </td>
-                                                    <!-- <td>
-                                                        <h2 class="table-avatar">
-                                                            <a href="teacher-details.html"
-                                                                class="avatar avatar-sm me-2"><img
-                                                                    class="avatar-img rounded-circle"
-                                                                    src="{% static 'assets/img/profiles/avatar-02.jpg' %}"
-                                                                    alt="User Image"></a>
-                                                            <a href="teacher-details.html">Aaliyah</a>
-                                                        </h2>
-                                                    </td> -->
+                                    
                                                     
-                                                    <td>{{teacher.teacher_name}}</td>
-                                                    <td>{{teacher.teacher_gender}}</td>
+                                                    <td>
+                                                        <h2 class="table-avatar">
+                                                            <a href="teacher-details.html" class="avatar avatar-sm me-2">
+                                                                {% if teacher.image %}
+                                                                    <img class="avatar-img rounded-circle" src="{{ teacher.image.url }}" alt="User Image">
+                                                                {% else %}
+                                                                    <img class="avatar-img rounded-circle" src="/media/default.jpg"  alt="Default Image">
+                                                                {% endif %}
+                                                            </a>
+                                                            <a href="teacher-details.html">{{ teacher.teacher_name }}</a>
+                                                        </h2>
+                                                    </td>
+                                                    
+                                                    
+                                                    
                                                     <td>{{teacher.teacher_email}}</td>
                                                     <td>{{teacher.teacher_phone}}</td>
-                                                    <td>{{teacher.age}}</td>
-                                                    <td>{{teacher.joinin_date}}</td>
+                                                    
                                                     <td>{{teacher.qualification}}</td>
-                                                    <td>{{teacher.experience}}</td>
-                                                    <td>{{teacher.address}}</td>
-                                                    <td>{{teacher.city}}</td>
-                                                    <td>{{teacher.zip_code}}</td>
-                                                    <td>{{teacher.county}}</td>
-                                                    <td>{{teacher.country}}</td>
+                                                    
                                                     <td>{{teacher.tsc_no}}</td>
                                                     <td>{{teacher.subject_combination}}</td>
 
 
                                                     <td class="text-end">
                                                         <div class="actions">
-                                                            <!-- <a href="javascript:;"
+                                                            <a href="javascript:;"
                                                                 class="btn btn-sm bg-success-light me-2">
                                                                 <i class="feather-eye"></i>
-                                                            </a> -->
+                                                            </a>
                                                             <a href="{% url 'editteacher' teacher.teacher_id %}"
                                                                 class="btn btn-sm bg-danger-light">
                                                                 <i class="feather-edit"></i>

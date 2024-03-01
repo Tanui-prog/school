@@ -74,6 +74,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="student-personals-grp">
+                                    {% for teacher in teachers %}
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="heading-detail">
@@ -85,12 +86,12 @@
                                                 </div>
                                                 <div class="views-personal">
                                                     <h4>Name</h4>
-                                                    <h5>Joe Kelley</h5>
+                                                    <h5>{{ teacher.teacher_name }}</h5>
                                                 </div>
                                             </div>
                                             <div class="personal-activity">
                                                 <div class="personal-icons">
-                                                    <img src="assets/img/icons/buliding-icon.svg" alt="">
+                                                    <img src="{{ teacher.image.url }}" alt="">
                                                 </div>
                                                 <div class="views-personal">
                                                     <h4>Department </h4>
@@ -103,7 +104,7 @@
                                                 </div>
                                                 <div class="views-personal">
                                                     <h4>Mobile</h4>
-                                                    <h5>+21 510-237-1901</h5>
+                                                    <h5>{{teacher.teacher_phone}}</h5>
                                                 </div>
                                             </div>
                                             <div class="personal-activity">
@@ -250,5 +251,6 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
 
 {% endblock %}

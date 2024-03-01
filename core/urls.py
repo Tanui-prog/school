@@ -25,7 +25,7 @@ urlpatterns = [
     path('editteacher/<int:teacher_id>/', views.editteacher, name='editteacher'),
     path('delete-teacher/<int:teacher_id>/', views.delete_teacher, name='delete_teacher'),
     path('teachers_grid', views.teachers_grid, name='teachers_grid'),
-    path('teacher_details', views.teacher_details, name='teacher_details'),
+    path('teacher_details/<int:teacher_id>/', views.teacher_details, name='teacher_details'),
     
 
     path('students', views.students, name='students'),

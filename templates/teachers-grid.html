@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 <div class="page-header">
     <div class="row align-items-center">
@@ -48,16 +47,16 @@
             <div class="card-body">
                 <div class="student-box flex-fill">
                     <div class="student-img">
-                        <a href="student-details.html">
-                            {% if teacher.profile_picture %}
+                        <a href="{% url 'teacher_details' teacher.teacher_id %}">
+                            
                             <img style="max-height: 200px;max-width: 200px;" class="img-fluid" alt="Students Info"
-                            src="{{ teacher.profile_picture.url }}">
+                                src="{{ teacher.image.url }}">
 
-                              {% endif %}
+                           
                         </a>
                     </div>
                     <div class="student-content pb-0">
-                        <h5><a href="{% url 'teacher_details' %}">{{ teacher.teacher_name }}</a></h5>
+                        <h5><a href="{% url 'teacher_details' teacher.teacher_id %}">{{ teacher.teacher_name }}</a></h5>
                         <h6>Teacher</h6>
                     </div>
                 </div>
@@ -65,5 +64,6 @@
         </div>
     </div>
     {% endfor %}
-</div>
-{% endblock %}
+
+  </div>
+{% endblock  %}

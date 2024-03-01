@@ -19,7 +19,6 @@ class Subject(models.Model):
         return f"{self.subject_id}: {self.subject_name} - {self.subject_class}"
 
 
-
 class Teacher(models.Model):
     teacher_id = models.AutoField(primary_key=True)
     identity_number = models.CharField(max_length=20)
@@ -27,7 +26,7 @@ class Teacher(models.Model):
     teacher_gender = models.CharField(max_length=10)
     teacher_email = models.EmailField()
     teacher_phone = models.CharField(max_length=20)
-    profile_picture = models.ImageField(upload_to='teacher_photos/', default='default.jpg')
+    image = models.ImageField(upload_to='teacher_images', default='default.jpg')
     age = models.IntegerField()
     joinin_date = models.CharField(max_length=20) 
     qualification = models.CharField(max_length=100)
