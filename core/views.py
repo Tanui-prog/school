@@ -182,28 +182,27 @@ def  delete_subject(request, subject_id):
 
 def addteacher(request):
     if request.method == 'POST':
-        if request.FILES.get('image') != None:
-            identity_number = request.POST.get('identity_number')
-            teacher_name = request.POST.get('teacher_name')
-            teacher_gender = request.POST.get('teacher_gender')
-            teacher_email = request.POST.get('teacher_email')
-            teacher_phone = request.POST.get('phone_number')
-            image = request.FILES.get('profile_picture')
-            age = request.POST.get('age')
-            joinin_date = request.POST.get('joining_date')
-            qualification = request.POST.get('qualification')
-            experience = request.POST.get('experience')
-            address = request.POST.get('address')
-            city = request.POST.get('city')
-            county = request.POST.get('county')
-            country = request.POST.get('country')
-            zip_code = request.POST.get('zip_code')
-            tsc_no = request.POST.get('tsc_no')
-            subject_combination = request.POST.get('subject_combinations')
+        identity_number = request.POST.get('identity_number')
+        teacher_name = request.POST.get('teacher_name')
+        teacher_gender = request.POST.get('teacher_gender')
+        teacher_email = request.POST.get('teacher_email')
+        teacher_phone = request.POST.get('phone_number')
+        image = request.FILES.get('profile_picture')
+        age = request.POST.get('age')
+        joinin_date = request.POST.get('joining_date')
+        qualification = request.POST.get('qualification')
+        experience = request.POST.get('experience')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        county = request.POST.get('county')
+        country = request.POST.get('country')
+        zip_code = request.POST.get('zip_code')
+        tsc_no = request.POST.get('tsc_no')
+        subject_combination = request.POST.get('subject_combinations')
 
-            if Teacher.objects.filter(identity_number=identity_number, tsc_no=tsc_no).exists():
-                messages.error(request, 'Teacher with the same identity number already exists')
-                return redirect('addteacher')
+        if Teacher.objects.filter(identity_number=identity_number, tsc_no=tsc_no).exists():
+            messages.error(request, 'Teacher with the same identity number already exists')
+            return redirect('addteacher')
             
         else:
 
