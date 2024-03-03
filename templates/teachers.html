@@ -1,145 +1,149 @@
 {% extends 'base.html' %}
-{% load static%}
+{% load static %}
 {% block content %}
-                    <div class="page-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="page-title">Teachers</h3>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Teachers</li>
-                                </ul>
-                            </div>
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Teachers</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                <li class="breadcrumb-item active">Teachers</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="student-group-form">
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search by ID ...">
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search by Name ...">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search by Phone ...">
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="search-student-btn">
+                <button type="btn" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-table">
+            <div class="card-body">
+
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">Teachers</h3>
+                        </div>
+                        <div class="col-auto text-end float-end ms-auto download-grp">
+                            <a href="teachers.html" class="btn btn-outline-gray me-2 active"><i
+                                    class="feather-list"></i></a>
+                            <a href="{% url 'teachers_grid' %}" class="btn btn-outline-gray me-2"><i
+                                    class="feather-grid"></i></a>
+                            <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
+                                Download teacher details</a>
+                            <a href="{% url 'addteacher' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                         </div>
                     </div>
+                </div>
 
-                    <div class="student-group-form">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Search by ID ...">
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Search by Name ...">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Search by Phone ...">
-                                </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="search-student-btn">
-                                    <button type="btn" class="btn btn-primary">Search</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="card card-table">
-                                <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                        <thead class="student-thread">
+                            <tr>
 
-                                    <div class="page-header">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <h3 class="page-title">Teachers</h3>
-                                            </div>
-                                            <div class="col-auto text-end float-end ms-auto download-grp">
-                                                <a href="teachers.html" class="btn btn-outline-gray me-2 active"><i
-                                                        class="feather-list"></i></a>
-                                                <a href="{% url 'teachers_grid' %}" class="btn btn-outline-gray me-2"><i
-                                                        class="feather-grid"></i></a>
-                                                <a href="#" class="btn btn-outline-primary me-2"><i
-                                                        class="fas fa-download"></i> Download</a>
-                                                <a href="{% url 'addteacher' %}" class="btn btn-primary"><i
-                                                        class="fas fa-plus"></i></a>
-                                            </div>
-                                        </div>
+
+                                <th>Name</th>
+
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Qualification</th>
+                                <th>Tsc No</th>
+                                <th>Subjects</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {% for teacher in teachers %}
+
+
+                                <td>
+                                    <h2 class="table-avatar">
+                                        <a href="teacher-details.html" class="avatar avatar-sm me-2">
+                                            {% if teacher.image %}
+                                                <img class="avatar-img rounded-circle" src="{{ teacher.image.url }}" alt="User Image">
+                                            {% else %}
+                                                <!-- Display a default image or placeholder if no image is available -->
+                                                <img class="avatar-img rounded-circle" src="{% static 'media/student_photos/default.jpg' %}" alt="Default Image">
+                                            {% endif %}
+                                        </a>
+                                        <a href="teacher-details.html">{{ teacher.teacher_name }}</a>
+                                    </h2>
+                                </td>
+                                
+
+
+
+
+                                <td>{{teacher.teacher_email}}</td>
+                                <td>{{teacher.teacher_phone}}</td>
+
+                                <td>{{teacher.qualification}}</td>
+
+                                <td>{{teacher.tsc_no}}</td>
+                                <td>{{teacher.subject_combination}}</td>
+
+
+                                <td class="text-end">
+                                    <div class="actions">
+                                        <a href="{% url 'teacher_details' teacher.teacher_id %}"
+                                            class="btn btn-sm bg-success-light me-2">
+                                            <i class="feather-eye" title="more  details"></i>
+                                        </a>
+                                        <a href="{% url 'editteacher' teacher.teacher_id %}"
+                                            class="btn btn-sm bg-danger-light">
+                                            <i class="feather-edit" title="edit"></i>
+
+                                        </a>
+                                        <a href="{% url 'delete_teacher' teacher.teacher_id %}" title="delete teacher"
+                                            class="btn btn-sm bg-success-light me-2 delete-class-btn"
+                                            onclick="return confirmDelete();">
+                                            <i class="fas fa-trash-alt delete-symbol"></i>
+                                        </a>
                                     </div>
-
-                                    <div class="table-responsive">
-                                        <table
-                                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
-                                            <thead class="student-thread">
-                                                <tr>
-
-                            
-                                                    <th>Name</th>
-                                                    
-                                                    <th>Email</th>
-                                                    <th>Phone Number</th>     
-                                                    <th>Qualification</th>
-                                                    <th>Tsc No</th>
-                                                    <th>Subject Combinations </th>
-                                                    <th class="text-end">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr >
-                                                    {% for teacher in teachers %}
-                                    
-                                                    
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            <a href="teacher-details.html" class="avatar avatar-sm me-2">
-                                                                
-                                                                    <img class="avatar-img rounded-circle" src="{{ teacher.image.url }}" alt="User Image">
-                                                 
-                                                            </a>
-                                                            <a href="teacher-details.html">{{ teacher.teacher_name }}</a>
-                                                        </h2>
-                                                    </td>
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    <td>{{teacher.teacher_email}}</td>
-                                                    <td>{{teacher.teacher_phone}}</td>
-                                                    
-                                                    <td>{{teacher.qualification}}</td>
-                                                    
-                                                    <td>{{teacher.tsc_no}}</td>
-                                                    <td>{{teacher.subject_combination}}</td>
+                                </td>
+                            </tr>
+                            <tr>
 
 
-                                                    <td class="text-end">
-                                                        <div class="actions">
-                                                            <a href="javascript:;"
-                                                                class="btn btn-sm bg-success-light me-2">
-                                                                <i class="feather-eye"></i>
-                                                            </a>
-                                                            <a href="{% url 'editteacher' teacher.teacher_id %}"
-                                                                class="btn btn-sm bg-danger-light">
-                                                                <i class="feather-edit"></i>
-                                                
-                                                            </a>
-                                                            <a href="{% url 'delete_teacher' teacher.teacher_id %}" class="btn btn-sm bg-success-light me-2 delete-class-btn" onclick="return confirmDelete();">
-                                                                <i class="fas fa-trash-alt delete-symbol"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                  
-                                                   
-                                                    {% endfor %}
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-                    <script>
-                        function confirmDelete() {
-                        var confirmDelete = confirm("Are you sure you want to delete this Teacher?");
-                        return confirmDelete;
-                    }
-                     </script>
-{% endblock %}               
+<script>
+    function confirmDelete() {
+        var confirmDelete = confirm("Are you sure you want to delete this Teacher?");
+        return confirmDelete;
+    }
+</script>
+{% endblock %}

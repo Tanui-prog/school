@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
@@ -18,22 +19,22 @@
         <!-- Search form -->
         <div class="col-lg-3 col-md-6">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search by ID ...">
+                <input id="search-id" type="text" class="form-control" placeholder="Search by ID ...">
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search by Name ...">
+                <input id="search-name" type="text" class="form-control" placeholder="Search by Name ...">
             </div>
         </div>
         <div class="col-lg-4 col-md-6">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search by Phone ...">
+                <input id="search-phone" type="text" class="form-control" placeholder="Search by Phone ...">
             </div>
         </div>
         <div class="col-lg-2">
             <div class="search-student-btn">
-                <button type="btn" class="btn btn-primary">Search</button>
+                <button id="search-button" type="button" onclick="clicked()" class="btn btn-primary">Search</button>
             </div>
         </div>
     </div>
@@ -42,21 +43,19 @@
 <!-- Teacher grid -->
 <div class="row">
     {% for teacher in teachers %}
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
+    <div class="col-xl-3 col-lg-4 col-md-6 d-flex teacher-card">
         <div class="card">
             <div class="card-body">
                 <div class="student-box flex-fill">
                     <div class="student-img">
                         <a href="{% url 'teacher_details' teacher.teacher_id %}">
-                            
-                            <img style="max-height: 200px;max-width: 200px;" class="img-fluid" alt="Students Info"
-                                src="{{ teacher.image.url }}">
-
-                           
+                            <img style="max-height: 150px; max-width: 150px; min-width: 150px;" class="img"
+                                alt="Students Info" src="{{ teacher.image.url }}">
                         </a>
                     </div>
                     <div class="student-content pb-0">
-                        <h5><a href="{% url 'teacher_details' teacher.teacher_id %}">{{ teacher.teacher_name }}</a></h5>
+                        <h5><a href="{% url 'teacher_details' teacher.teacher_id %}"
+                                class="teacher-name">{{ teacher.teacher_name }}</a></h5>
                         <h6>Teacher</h6>
                     </div>
                 </div>
@@ -64,6 +63,9 @@
         </div>
     </div>
     {% endfor %}
+</div>
+<script>
+    function clicked()
+    </script>
 
-  </div>
 {% endblock  %}

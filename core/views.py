@@ -4,7 +4,7 @@ from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
-from .models import Subject, Class, Teacher, Students
+from .models import Subject, Classes, Teacher, Students
 from django.contrib import messages
 
 
@@ -22,7 +22,7 @@ def home(request):
 
 # Classes
 def classes(request):
-    classes = Class.objects.all()
+    classes = Classes.objects.all()
     context = {
         'classes': classes
     }
@@ -36,12 +36,12 @@ def add_class(request):
         stream = request.POST.get("stream")
         
         # Check if class already exists
-        if Class.objects.filter(grade=grade, stream=stream).exists():
+        if Classes.objects.filter(grade=grade, stream=stream).exists():
             messages.error(request, 'Class already exists')
             return redirect('add_class')
         else:
             # If class does not exist, save it
-            Class.objects.create(grade=grade, stream=stream)
+            Classes.objects.create(grade=grade, stream=stream)
             messages.success(request, 'Class added successfully')
             return redirect('add_class')  
         # Redirect to the same page after adding a class
@@ -53,8 +53,8 @@ def add_class(request):
 def saveclass(request, class_id):
     try:
         # Retrieve the class object
-        class_obj = Class.objects.get(class_id=class_id)
-    except Class.DoesNotExist:
+        class_obj = Classes.objects.get(class_id=class_id)
+    except Classes.DoesNotExist:
         messages.error(request, "Class does not exist.")
         return redirect('classes')  # Redirect to classes page if class does not exist
 
@@ -64,7 +64,7 @@ def saveclass(request, class_id):
         stream = request.POST.get('stream')
 
         # Check if the submitted class details are unique
-        if Class.objects.exclude(class_id=class_id).filter(grade=grade, stream=stream).exists():
+        if Classes.objects.exclude(class_id=class_id).filter(grade=grade, stream=stream).exists():
             messages.error(request, "Another class with the same grade and stream already exists.")
             return render(request, 'edit-class.html', {'class': class_obj})  # Render the edit form with error message
 
@@ -83,7 +83,7 @@ def saveclass(request, class_id):
 
 
 def delete_class(request, class_id):
-    class_obj = get_object_or_404(Class, class_id=class_id)
+    class_obj = get_object_or_404(Classes, class_id=class_id)
     class_obj.delete()
     return redirect('classes')
 
@@ -92,7 +92,7 @@ def delete_class(request, class_id):
 
 # SUBJECT
 def addsubject(request):
-    classes = Class.objects.all()  # Retrieve all classes from the database
+    classes = Classes.objects.all()  # Retrieve all classes from the database
     if request.method == 'POST':
         subject_name = request.POST.get('subject_name')
         class_id = request.POST.get('subject_class')  # Retrieve class_id from the POST data
@@ -104,8 +104,8 @@ def addsubject(request):
         
         try:
             # Retrieve the Class object using the class_id
-            subject_class = Class.objects.get(class_id=class_id)
-        except Class.DoesNotExist:
+            subject_class = Classes.objects.get(class_id=class_id)
+        except Classes.DoesNotExist:
             # Handle the case where the class does not exist
             messages.error(request, 'Selected class does not exist')
             return redirect('addsubject')  # Redirect back to the addsubject page or handle it appropriately
@@ -146,15 +146,15 @@ def editsubject(request, subject_id):
 
         try:
             # Retrieve the Class object using the class_id
-            subject_class = Class.objects.get(class_id=subject_class_id)
-        except Class.DoesNotExist:
+            subject_class = Classes.objects.get(class_id=subject_class_id)
+        except Classes.DoesNotExist:
             messages.error(request, 'Selected class does not exist')
             return redirect('editsubject', subject_id=subject_id)
 
         # Check if the submitted subject details are unique
         if Subject.objects.exclude(subject_id=subject_id).filter(subject_name=subject_name, subject_class=subject_class).exists():
             messages.error(request, "Another subject with the same name and class already exists.")
-            return render(request, 'edit-subject.html', {'subject': subject_obj, 'classes': Class.objects.all()})  # Pass all classes to the template
+            return render(request, 'edit-subject.html', {'subject': subject_obj, 'classes': Classes.objects.all()})  # Pass all classes to the template
 
         # Update subject object
         subject_obj.subject_name = subject_name
@@ -165,7 +165,7 @@ def editsubject(request, subject_id):
         return redirect('subjects')  # Redirect to subjects page after successful update
     else:
         # If not POST, render edit form
-        return render(request, 'edit-subject.html', {'subject': subject_obj, 'classes': Class.objects.all()})  # Pass all classes to the template
+        return render(request, 'edit-subject.html', {'subject': subject_obj, 'classes': Classes.objects.all()})  # Pass all classes to the template
 
 
 
@@ -181,6 +181,7 @@ def  delete_subject(request, subject_id):
 
 
 def addteacher(request):
+    
     if request.method == 'POST':
         identity_number = request.POST.get('identity_number')
         teacher_name = request.POST.get('teacher_name')
@@ -203,10 +204,17 @@ def addteacher(request):
         if Teacher.objects.filter(identity_number=identity_number, tsc_no=tsc_no).exists():
             messages.error(request, 'Teacher with the same identity number already exists')
             return redirect('addteacher')
+        
+        if image:
+            Teacher.objects.create(identity_number=identity_number, teacher_name=teacher_name, teacher_gender=teacher_gender,
+                                        teacher_email=teacher_email, teacher_phone=teacher_phone, age=age, joinin_date=joinin_date,
+                                        qualification=qualification, experience=experience, image=image,
+                                        address=address, city=city, county=county, country=country, zip_code=zip_code, tsc_no=tsc_no,
+                                        subject_combination=subject_combination)
             
         else:
 
-            default_image_path = os.path.join(settings.MEDIA_ROOT, 'default.jpg')
+            default_image_path = 'default.jpg'
             Teacher.objects.create(identity_number=identity_number, teacher_name=teacher_name, teacher_gender=teacher_gender,
                                         teacher_email=teacher_email, teacher_phone=teacher_phone, age=age, joinin_date=joinin_date,
                                         qualification=qualification, experience=experience, image=default_image_path,
@@ -252,6 +260,7 @@ def editteacher(request, teacher_id):
         experience = request.POST.get('experience')
         teacher_email = request.POST.get('teacher_email')
         address = request.POST.get('address')
+        image = request.FILES.get('profile_picture')
         city = request.POST.get('city')
         county = request.POST.get('county')
         zip_code = request.POST.get('zip_code')
@@ -259,12 +268,7 @@ def editteacher(request, teacher_id):
         tsc_no = request.POST.get('tsc_no')
         subject_combination = request.POST.get('subject_combination')
 
-        # Check if the submitted teacher details are unique
-        if Teacher.objects.exclude(teacher_id=teacher_id).filter(identity_number=identity_number).exists():
-            messages.error(request, "Another teacher with the same identity number already exists.")
-            return render(request, 'edit-teacher.html', {'teacher': teacher})  # Render the edit form with error message
-
-        # Update teacher object
+        # Update teacher object with new data
         teacher.identity_number = identity_number
         teacher.teacher_name = teacher_name
         teacher.teacher_gender = teacher_gender
@@ -276,6 +280,7 @@ def editteacher(request, teacher_id):
         teacher.teacher_email = teacher_email
         teacher.address = address
         teacher.city = city
+        teacher.image = image
         teacher.county = county
         teacher.zip_code = zip_code
         teacher.country = country
@@ -286,10 +291,10 @@ def editteacher(request, teacher_id):
         messages.success(request, "Teacher details updated successfully.")
         return redirect('editteacher', teacher_id=teacher_id) 
 
-    else:
-        # If not POST, render edit form
-        return render(request, 'edit-teacher.html', {'teacher': teacher})
-    
+    # For GET requests, populate form fields with existing data
+    return render(request, 'edit-teacher.html', {'teacher': teacher})
+
+
 
 def  teachers_grid(request):
     teachers = Teacher.objects.all()
@@ -309,7 +314,7 @@ def teacher_details(request,teacher_id):
 
 
 def addstudent(request):
-    classes = Class.objects.all()
+    classes = Classes.objects.all()
     
     if request.method == 'POST':
        
@@ -347,7 +352,7 @@ def addstudent(request):
 
 
     else:
-        return render(request, 'add-student.html' , {'classes': classes})
+        return render(request, 'add-student.html', {'classes': classes})
     
         
 def students(request):

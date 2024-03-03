@@ -98,10 +98,15 @@
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="form-group local-forms">
-                                <label>Class <span class="login-danger">*</span></label>
-                                <select class="form-control select" name="classstream">
+                                <label>Select Class <span class="login-danger">*</span></label>
+                                <select name="subject_class" class="form-control">
+                                    <option value="">Select a Class</option> <!-- Default option -->
                                     {% for class in classes %}
-                                    <option value="{{ class.id }}">{{ class.class_name }}</option>
+                                        {% if class.selected %}
+                                            <option value="{{ class.class_id }}" selected>{{ class.grade }}  {{ class.stream }}</option>
+                                        {% else %}
+                                            <option value="{{ class.class_id }}">{{ class.grade }}  {{ class.stream }}</option>
+                                        {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>
