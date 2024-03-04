@@ -146,12 +146,19 @@
                             <div class="form-group students-up-files">
                                 <label>Upload Teacher Photo (150px X 150px)</label>
                                 <div class="upload">
-                                    
-                                    <label class="file-upload image-upbtn mb-0">
-                                        <input type="file" accept="image/*" value="{{ teacher.image.url }}" name="profile_picture" />
-                                        Import Photo
-                                    </label>
-                                    
+                                    {% if teacher.image %}
+                                        <img src="{{ teacher.image.url }}" alt="Teacher Photo" width="150" height="150">
+                                        <label class="file-upload image-upbtn mb-0">
+                                            <input type="file" accept="image/*" name="profile_picture" />
+                                            Change Photo
+                                        </label>
+                                    {% else %}
+                                        <img src="{% static 'default.jpg' %}" alt="Default Teacher Photo" width="150" height="150">
+                                        <label class="file-upload image-upbtn mb-0">
+                                            <input type="file" accept="image/*" name="profile_picture" required />
+                                            Import Photo
+                                        </label>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

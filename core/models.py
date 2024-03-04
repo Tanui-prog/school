@@ -54,7 +54,7 @@ class Students(models.Model):
     blood_group = models.CharField(max_length=5)
     religion = models.CharField(max_length=50)
     age = models.IntegerField()
-    Classes = models.ForeignKey(Classes, on_delete=models.SET_NULL, null=True, default=None)
+    student_class = models.ForeignKey(Classes, on_delete=models.SET_NULL, null=True, default=None)
     session = models.CharField(max_length=50)
     image = models.ImageField(upload_to='student_photos/', default='default.jpg')
     parent_name = models.CharField(max_length=100)

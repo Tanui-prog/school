@@ -86,8 +86,8 @@
                                             {% if teacher.image %}
                                                 <img class="avatar-img rounded-circle" src="{{ teacher.image.url }}" alt="User Image">
                                             {% else %}
-                                                <!-- Display a default image or placeholder if no image is available -->
-                                                <img class="avatar-img rounded-circle" src="{% static 'media/student_photos/default.jpg' %}" alt="Default Image">
+                                                 <!-- Display a default image or placeholder if no image is available  -->
+                                                <img class="avatar-img rounded-circle" src="{% static 'media/student_photos/default.jpg' %}" alt="Default Image"> 
                                             {% endif %}
                                         </a>
                                         <a href="teacher-details.html">{{ teacher.teacher_name }}</a>

@@ -238,9 +238,7 @@ def  delete_teacher(request, teacher_id):
     teacher_obj.delete()
     return redirect('teachers')
 
-
 def editteacher(request, teacher_id):
-
     try:
         # Retrieve the teacher object
         teacher = get_object_or_404(Teacher, teacher_id=teacher_id)
@@ -260,7 +258,7 @@ def editteacher(request, teacher_id):
         experience = request.POST.get('experience')
         teacher_email = request.POST.get('teacher_email')
         address = request.POST.get('address')
-        image = request.FILES.get('profile_picture')
+        image = request.FILES.get('profile_picture', None)  # Get the new image or None
         city = request.POST.get('city')
         county = request.POST.get('county')
         zip_code = request.POST.get('zip_code')
@@ -279,8 +277,9 @@ def editteacher(request, teacher_id):
         teacher.experience = experience
         teacher.teacher_email = teacher_email
         teacher.address = address
+        if image:  # If a new image is uploaded
+            teacher.image = image
         teacher.city = city
-        teacher.image = image
         teacher.county = county
         teacher.zip_code = zip_code
         teacher.country = country
@@ -289,7 +288,7 @@ def editteacher(request, teacher_id):
         teacher.save()
 
         messages.success(request, "Teacher details updated successfully.")
-        return redirect('editteacher', teacher_id=teacher_id) 
+        return redirect('editteacher', teacher_id=teacher_id)
 
     # For GET requests, populate form fields with existing data
     return render(request, 'edit-teacher.html', {'teacher': teacher})
@@ -327,9 +326,8 @@ def addstudent(request):
         blood_group = request.POST.get('blood_group')
         religion = request.POST.get('religion')
         age = request.POST.get('age')
-        Class = request.POST.get('classstream')
+        student_class = request.POST.get('student_class')
         session = request.POST.get('session')
-
         image = request.FILES.get('profile_picture') 
         parent_name = request.POST.get('parent_name')
         parent_email = request.POST.get('parent_email')
@@ -341,10 +339,20 @@ def addstudent(request):
             messages.error(request, 'Student with the same admission number already exists')
             return redirect('addstudent')
         
-        else:
-            
+
+        if image:
             student = Students(first_name=first_name, last_name=last_name, student_gender=student_gender,
-            joining_date=joining_date, admission_no=admission_no, blood_group=blood_group, religion=religion, age=age, Class=Class, session=session, image=image, parent_name=parent_name, parent_email=parent_email, parent_phone=parent_phone, parent_address=parent_address, parent_relationship=parent_reltionship)
+            joining_date=joining_date, admission_no=admission_no, blood_group=blood_group, religion=religion, age=age,student_class=student_class, session=session, image=image, parent_name=parent_name, parent_email=parent_email, parent_phone=parent_phone, parent_address=parent_address, parent_relationship=parent_reltionship)
+            student.save()
+            messages.success(request, 'Student added successfully')
+            return redirect(addstudent)
+
+
+        
+        else:
+            default_image_path = 'default.jpg'
+            student = Students(first_name=first_name, last_name=last_name, student_gender=student_gender,
+            joining_date=joining_date, admission_no=admission_no, blood_group=blood_group, religion=religion, age=age, student_class=student_class, session=session, image=default_image_path, parent_name=parent_name, parent_email=parent_email, parent_phone=parent_phone, parent_address=parent_address, parent_relationship=parent_reltionship)
             student.save()
             
             messages.success(request, 'Student added successfully')

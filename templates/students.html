@@ -87,7 +87,7 @@
                                 <td>{{ student.admission_no }}</td>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a href="student-details.html" class="avatar avatar-sm me-2">
+                                        <a href="{% url 'editstudent'  %}" class="avatar avatar-sm me-2">
                                             {% if student.image %}
                                             <img src="{{ student.image.url }}">
                                             {% endif %}
@@ -96,7 +96,7 @@
                                             {{ student.last_name }}</a>
                                     </h2>
                                 </td>
-                                <td>{{ student.Class }}</td>
+                                <td>{{ student.student_class }}</td>
                                 <td>{{ student.joining_date }}</td>
                                 <td>{{ student.parent_name }}</td>
                                 <td>{{ student.parent_phone }}</td>

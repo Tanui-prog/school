@@ -11,7 +11,7 @@
                     <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="home">Admin Dashboard</a></li>
+                        <li><a href="{% url 'dashboard' %}">Admin Dashboard</a></li>
                         <li><a href="">Teacher Dashboard</a></li>
                         <li><a href="">Student Dashboard</a></li>
                     </ul>
@@ -20,18 +20,18 @@
                     <a href="students"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="students">Student List</a></li>
-                        <li><a href="addstudent">Student Add</a></li>
-                        <li><a href="">Student Edit</a></li>
+                        <li><a href="{% url 'students' %}">Student List</a></li>
+                        <li><a href="{% url 'addstudent' %}">Student Add</a></li>
+                        
                     </ul>
                 </li>
                 <li class="submenu">
                     <a href="teachers"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="teachers">Teacher List</a></li>
-                        <li><a href="addteacher">Teacher Add</a></li>
-                        <li><a href="">Teacher Edit</a></li>
+                        <li><a href="{% url 'teachers' %}">Teacher List</a></li>
+                        <li><a href="{% url 'addteacher' %}">Teacher Add</a></li>
+                        
                     </ul>
                 </li>
                 <li class="submenu">
@@ -40,16 +40,16 @@
                     <ul>
                         <li><a href="">Department List</a></li>
                         <li><a href="">Department Add</a></li>
-                        <li><a href="">Department Edit</a></li>
+                       
                     </ul>
                 </li>
                 <li class="submenu">
                     <a href="#"><i class="fas fa-book-reader"></i> <span> Subjects</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="subjects">Subject List</a></li>
-                        <li><a href="addsubject">Subject Add</a></li>
-                        <li><a href="editsubject.html">Subject Edit</a></li>
+                        <li><a href="{% url 'subjects' %}">Subject List</a></li>
+                        <li><a href="{% url 'addsubject' %}">Subject Add</a></li>
+                        
                     </ul>
                 </li>
                 <li class="submenu">
