@@ -8,7 +8,7 @@
             <div class="page-sub-header">
                 <h3 class="page-title">Students</h3>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="students.html">Student</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'students' %}">Student</a></li>
                     <li class="breadcrumb-item active">All Students</li>
                 </ul>
             </div>
@@ -27,164 +27,48 @@
                             <h3 class="page-title">Students</h3>
                         </div>
                         <div class="col-auto text-end float-end ms-auto download-grp">
-                            <a href="students.html" class="btn btn-outline-gray me-2"><i class="feather-list"></i></a>
-                            <a href="students-grid.html" class="btn btn-outline-gray me-2 active"><i
+                            <a href="{% url 'students' %}" class="btn btn-outline-gray me-2"><i class="feather-list"></i></a>
+                            <a href="{% url 'students_grid' %}" class="btn btn-outline-gray me-2 active"><i
                                     class="feather-grid "></i></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="student-pro-list">
-                    <div class="row">
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
-                            <div class="card">
-                                <div class="card-body">
-                                    
-                                    <div class="student-box flex-fill">
-                                        <div class="student-img">
-                                            <a href="student-details.html">
-                                                <img class="img-fluid" alt="Students Info"
-                                                    src="{% static 'assets/img/profiles/avatar-03.jpg'%}">
-                                            </a>
-                                        </div>
-                                        <div class="student-content pb-0">
-                                            <h5><a href="student-details.html">Malynne</a></h5>
-                                            <h6>Student</h6>
-                                        </div>
+
+                <!-- <div class="student-pro-list"> -->
+                <div class="row">
+                    {% for student in students %}
+                    <div class="col-xl-3 col-lg-4 col-md-6 d-flex teacher-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="student-box flex-fill">
+                                    <div class="student-img">
+                                        <a href="{% url 'student_details' student.student_id %}">
+
+                                            {% if student.image %}
+                                            <img class="avatar-img rounded-circle" src="{{ student.image.url }}"
+                                                alt="User Image">
+                                            {% else %}
+                                            <!-- Display a default image or placeholder if no image is available  -->
+                                            <!-- <img class="avatar-img rounded-circle" src="{% static 'media/student_photos/default.jpg' %}" alt="Default Image">  -->
+                                            {% endif %}
+                                        </a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="student-box flex-fill">
-                                        <div class="student-img">
-                                            <a href="student-details.html">
-                                                <img class="img-fluid" alt="Students Info"
-                                                    src="{% static 'assets/img/profiles/avatar-04.jpg'%}">
-                                            </a>
-                                        </div>
-                                        <div class="student-content pb-0">
-                                            <h5><a href="student-details.html">Levell Scott</a></h5>
-                                            <h6>Student</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="student-box flex-fill">
-                                        <div class="student-img">
-                                            <a href="student-details.html">
-                                                <img class="img-fluid" alt="Students Info"
-                                                    src="{% static 'assets/img/profiles/avatar-05.jpg'%}">
-                                            </a>
-                                        </div>
-                                        <div class="student-content pb-0">
-                                            <h5><a href="student-details.html">Minnie</a></h5>
-                                            <h6>Student</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="student-box flex-fill">
-                                        <div class="student-img">
-                                            <a href="student-details.html">
-                                                <img class="img-fluid" alt="Students Info"
-                                                    src="{% static 'assets/img/profiles/avatar-06.jpg'%}">
-                                            </a>
-                                        </div>
-                                        <div class="student-content pb-0">
-                                            <h5><a href="student-details.html">Lois A</a></h5>
-                                            <h6>Student</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="student-box flex-fill">
-                                        <div class="student-img">
-                                            <a href="student-details.html">
-                                                <img class="img-fluid" alt="Students Info"
-                                                    src="{% static 'assets/img/profiles/avatar-07.jpg'%}">
-                                            </a>
-                                        </div>
-                                        <div class="student-content pb-0">
-                                            <h5><a href="student-details.html">Calvin</a></h5>
-                                            <h6>Student</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="student-box flex-fill">
-                                        <div class="student-img">
-                                            <a href="student-details.html">
-                                                <img class="img-fluid" alt="Students Info"
-                                                    src="{% static 'assets/img/profiles/avatar-08.jpg'%}">
-                                            </a>
-                                        </div>
-                                        <div class="student-content pb-0">
-                                            <h5><a href="student-details.html">Charles Dickens</a></h5>
-                                            <h6>Student</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="student-box flex-fill">
-                                        <div class="student-img">
-                                            <a href="student-details.html">
-                                                <img class="img-fluid" alt="Students Info"
-                                                    src="{% static 'assets/img/profiles/avatar-09.jpg'%}">
-                                            </a>
-                                        </div>
-                                        <div class="student-content pb-0">
-                                            <h5><a href="student-details.html">Joe Kelley</a></h5>
-                                            <h6>Student</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="student-box flex-fill">
-                                        <div class="student-img">
-                                            <a href="student-details.html">
-                                                <img class="img-fluid" alt="Students Info"
-                                                    src="{% static 'assets/img/profiles/avatar-10.jpg'%}">
-                                            </a>
-                                        </div>
-                                        <div class="student-content pb-0">
-                                            <h5><a href="student-details.html">Charles Dickens</a></h5>
-                                            <h6>Student</h6>
-                                        </div>
+                                    <div class="student-content pb-0">
+                                        <h5><a href="{% url 'student_details' student.student_id %}"
+                                                class="teacher-name"></a></h5>
+                                        <h6>{{ student.first_name }}
+                                            {{ student.last_name }}</h6>
+                                            <h6>{{ student.student_class }}</h6>
+                                        
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
+
+
+                {% endblock  %}

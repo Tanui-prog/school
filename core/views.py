@@ -400,11 +400,13 @@ def students(request):
 
     return render(request, 'students/students.html', context)
 
-def student_details(request):
-    return render(request, 'students/student-details.html')
+def student_details(request, student_id):
+    student =get_object_or_404(Students,student_id = student_id)
+    context = {"student":student}
+    return render(request, 'students/student-details.html', context )
 
 def students_grid(request):
-    students = Students.object.all()
+    students = Students.objects.all()
     context = {'students' : students}
     return render(request, 'students/students-grid.html',context)
 
