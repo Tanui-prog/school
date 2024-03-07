@@ -34,6 +34,7 @@ urlpatterns = [
     path('deletestudent', views.delete_student, name='delete_student'),
     path('students_grid', views.students_grid, name='students_grid'),
     path('student_details/<int:student_id>/', views.student_details, name='student_details'),
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

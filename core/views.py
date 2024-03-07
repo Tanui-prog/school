@@ -429,5 +429,19 @@ def editstudent(request, student_id):
         return render(request, 'students/edit-student.html', {'student': student, 'classes': classes})
 
 def delete_student(request):
+    
     return render(request, 'students/delete-student.html')
+
+def studentsearchview(request):
+    
+    if request.method == 'POST':
+        searchbyadm = request.POST.get('admission_no')
+        searchbyname = request.POST.get('name')
+
+        search = Students.objects.filter(admission_no__contains = searchbyadm)
+        searchbyname = Students.objects.filter()
+        context={"students": search}
+        
+
+        return render(request, 'students/students.html',context)
 
