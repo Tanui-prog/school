@@ -39,15 +39,15 @@
 
                                                     {% for class in classes %}
                                                     
-                                                      {% if class == subject.subject_class %}
+                                                      {% if class.grade == subject.subject_class.grade and class.stream == subject.subject_class.stream  %}
                                                       
-                                                        <option value="{{class.class_id}}" selected>{{class.class_name}}</option>
+                                                        <option value="{{class.class_id}}" selected>{{class.grade}} {{class.stream}}</option>
                                                        
                                                       
                                                       {% else %}
                                                 
                                                         
-                                                       <option value="{{class.class_id}}">{{class.class_name}}</option>
+                                                       <option value="{{class.class_id}}">{{class.grade}} {{class.stream}}</option>
                                                       {% endif %}
                                                 
                                                     {% endfor %}

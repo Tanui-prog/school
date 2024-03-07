@@ -414,10 +414,19 @@ def editstudent(request, student_id):
     try:
         # Retrieve the student object
         student = get_object_or_404(Students, student_id=student_id)
+        classes = Classes.objects.all()
+
     except Students.DoesNotExist:
         messages.error(request, "Student does not exist.")
         return redirect('students')  # Redirect to students page if student does not exist
-    return render(request, 'students/edit-student.html')
+
+    if request.method == 'POST':
+        # Handle form submission
+        # Update the student object with the submitted data
+        pass
+    else:
+        # Render the edit student form
+        return render(request, 'students/edit-student.html', {'student': student, 'classes': classes})
 
 def delete_student(request):
     return render(request, 'students/delete-student.html')
