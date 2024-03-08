@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from .models import Subject, Classes, Teacher, Students
 from django.contrib import messages
+from django.db.models import Q
 
 
 
@@ -432,16 +433,24 @@ def delete_student(request):
     
     return render(request, 'students/delete-student.html')
 
-def studentsearchview(request):
-    
+def search(request):
     if request.method == 'POST':
         searchbyadm = request.POST.get('admission_no')
-        searchbyname = request.POST.get('name')
+        full_name = request.POST.get('name')
 
-        search = Students.objects.filter(admission_no__contains = searchbyadm)
-        searchbyname = Students.objects.filter()
-        context={"students": search}
-        
+        # Split full name into first name and last name
+        names = full_name.split()
+        first_name = names[0] if names else ""
+        last_name = names[-1] if len(names) > 1 else first_name  # Use first name if last name is not provided
 
-        return render(request, 'students/students.html',context)
+        # Search by admission number
+        search_by_adm = Students.objects.filter(admission_no__contains=searchbyadm)
 
+        # Search by full name
+        search_by_name = Students.objects.filter(
+            Q(first_name__icontains=first_name) | Q(last_name__icontains=last_name)
+        )
+
+        context = {"students": search_by_name}
+
+        return render(request, 'students/students.html', context)
