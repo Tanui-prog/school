@@ -141,7 +141,7 @@
                                     <label>Session
 
                                         <span class="login-danger">*</span></label>
-                                    <input class="form-control" type="text" name="session" />
+                                    <input class="form-control" value="{{student.session}}" type="text" name="session" />
                                 </div>
                             </div>
                         </div>
@@ -149,12 +149,21 @@
 
                         <div class="col-12">
                             <div class="form-group students-up-files">
-                                <label>Upload Student Photo (150px X 150px)</label>
+                                <label>Upload student Photo (150px X 150px)</label>
                                 <div class="upload">
-                                    <label class="file-upload image-upbtn mb-0">
-                                        <input type="file" accept="image/*" name="profile_picture" />
-                                        Import Photo
-                                    </label>
+                                    {% if student.image %}
+                                        <img src="{{ student.image.url }}" alt="student Photo" width="150" height="150">
+                                        <label class="file-upload image-upbtn mb-0">
+                                            <input type="file" accept="image/*" name="profile_picture" />
+                                            Change Photo
+                                        </label>
+                                    {% else %}
+                                        <img src="{% static 'default.jpg' %}" alt="Default student Photo" width="150" height="150">
+                                        <label class="file-upload image-upbtn mb-0">
+                                            <input type="file" accept="image/*" name="profile_picture" required />
+                                            Import Photo
+                                        </label>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -165,7 +174,7 @@
                         <div class="col-12 col-sm-4">
                             <div class="form-group local-forms">
                                 <label>Parent Name </label>
-                                <input class="form-control" type="text" placeholder="Enter Parent name"
+                                <input class="form-control" value="{{student.parent_name}}" type="text" placeholder="Enter Parent name"
                                     name="parent_name" />
                             </div>
                         </div>
@@ -175,7 +184,7 @@
                                     <label>Parent Email
 
                                         <span class="login-danger">*</span></label>
-                                    <input class="form-control" placeholder="Enter Email" type="email"
+                                    <input class="form-control" value="{{student.parent_email}}" placeholder="Enter Email" type="email"
                                         name="parent_email" />
                                 </div>
                             </div>
@@ -186,7 +195,7 @@
                                     <label>Parent Relationship
 
                                         <span class="login-danger">*</span></label>
-                                    <input class="form-control" placeholder="Enter parent Relationship" type="text"
+                                    <input class="form-control" value="{{student.parent_relationship}}" placeholder="Enter parent Relationship" type="text"
                                         name="relationship" required />
                                 </div>
                             </div>
@@ -197,7 +206,7 @@
                                     <label>Parent Phone number
 
                                         <span class="login-danger">*</span></label>
-                                    <input class="form-control" placeholder="parent phone number" type="tel"
+                                    <input class="form-control" value="{{student.parent_phone}}" placeholder="parent phone number" type="tel"
                                         name="parent_phone" required />
                                 </div>
                             </div>
@@ -208,7 +217,7 @@
                                     <label>Address
 
                                         <span class="login-danger">*</span></label>
-                                    <input class="form-control" placeholder="Address" type="text" name="address"
+                                    <input class="form-control" value="{{student.parent_address}}" placeholder="Address" type="text" name="address"
                                         required />
                                 </div>
                             </div>

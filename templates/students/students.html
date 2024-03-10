@@ -20,28 +20,39 @@
         </div>
     </div>
 </div>
-<form action="search results" method="post" >
+
+<form action="{% url 'search' %}" method="post">
     {% csrf_token %}
-<div class="student-group-form">
-    <div class="row">
-        <div class="col-lg-3 col-md-6">
-            <div class="form-group">
-                <input type="text" name="admission_no" class="form-control" placeholder="Search by Admission_no ...">
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="form-group">
-                <input type="text" name="name" class="form-control" placeholder="Search by Name ...">
-            </div>
-        </div>
+    <div>
+        {% if messages %}
+                        <ul class="alert alert-info" style="color:rgb(0, 0, 0);text-align: center;font-size: 20px;">
+                            {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                                {% endfor %}
+                        </ul>
+                        {% endif %}
         
-        <div class="col-lg-2">
-            <div class="search-student-btn">
-                <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    <div class="student-group-form">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="form-group">
+                    <input type="text" name="admission_no" class="form-control" placeholder="Search by Admission_no ...">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="Search by Name ...">
+                </div>
+            </div>
+            
+            <div class="col-lg-2">
+                <div class="search-student-btn">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </form>
 <div class="row">
     <div class="col-sm-12">
