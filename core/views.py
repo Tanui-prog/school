@@ -22,16 +22,21 @@ def home(request):
     # Convert the query result to a list of dictionaries for easier access in JavaScript
     
 
-    print(student_gender_data)
-    
+    male_count = Students.objects.filter(student_gender='male').count()
+    female_count = Students.objects.filter(student_gender='female').count()
+    others = Students.objects.filter(student_gender= 'other' )
 
-    context = {
+    data = {
+        'labels': ['Male', 'Female', 'Others'],
+        'values': [male_count, female_count, others],
         'total_students': total_students,
         'total_teachers': total_teachers,
         'student_gender_data': student_gender_data,
     }
 
-    return render(request, 'index.html', context)
+ 
+
+    return render(request, 'index.html', data)
 
 
 

@@ -123,7 +123,7 @@
                         </ul>
                     </div>
                     
-                <canvas id="genderChart" style="height: 300px;width: 300px;"></canvas>
+                <canvas id="genderChart" style="height:400px ;width: 500px;"></canvas>
 
                 </div>
             </div>
@@ -380,14 +380,14 @@
     totaltudents = parseInt(totalStudents);
 
     var myChart = new Chart(ctx, {
-        type: 'pie',
+        type: 'doughnut',
         data: {
             labels: ['Students', 'Teachers'],
             datasets: [{
                 data: [ totalStudents ,totalTeachers ], // Replace with your actual data
                 backgroundColor: [
                     '#70c4cf',
-                    '#3d5ee1'
+                    'black'
                 ],
                 borderWidth: 1
             }]
@@ -396,51 +396,34 @@
             responsive: false,
             maintainAspectRatio: false,
             legend: {
-                position: 'right'
+                position: 'left'
+            }
+        }
+    });
+
+    var genderCtx = document.getElementById('genderChart').getContext('2d');
+    var genderData = {
+        labels: ['Male', 'Female','Others'],
+        datasets: [{
+            data: [ 76,87,64],
+            backgroundColor: ['#3d5ee1', '#ff6f61','green'],
+            borderWidth: 1
+        }]
+    };
+
+    var genderChart = new Chart(genderCtx, {
+        type: 'bar',
+        data: genderData,
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            legend: {
+                position: 'left'
             }
         }
     });
 
 </script>
-<!-- <script>
-var ctx = document.getElementById('genderChart').getContext('2d');
-// var genderData = JSON.parse(student_gender_data|safe);
-// var labels = genderData.map(function(item) {
-//     return item.student_gender; // Change 'students_gender' to 'student_gender'
-// });
-// var data = genderData.map(function(item) {
-//     return item.count;
-// });
 
-var chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: 'Student Gender',
-            data: [ 20 ,30],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                // Add more colors if needed
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                // Add more border colors if needed
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-
-</script> -->
 
 {% endblock %}
