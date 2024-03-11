@@ -50,7 +50,7 @@
                                         <a href="{% url 'student_details' student.student_id %}">
 
                                             {% if student.image %}
-                                            <img class="avatar-img rounded-circle" src="{{ student.image.url }}"
+                                            <img class="avatar-img rounded-circle" style="max-height: 90px;max-width: 90px;" src="{{ student.image.url }}"
                                                 alt="User Image">
                                             {% else %}
                                             <!-- Display a default image or placeholder if no image is available  -->

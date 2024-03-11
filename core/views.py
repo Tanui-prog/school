@@ -7,17 +7,31 @@ from django.shortcuts import redirect
 from .models import Subject, Classes, Teacher, Students
 from django.contrib import messages
 from django.db.models import Q
+from django.db.models import Count
+import json
 
 
 
 
 # Create your views here.
 def home(request):
-    return render(request, 'index.html')
+    total_students = Students.objects.count()
+    total_teachers = Teacher.objects.count()
 
+    student_gender_data = list(Students.objects.values('student_gender').annotate(count=Count('student_gender')))
+    # Convert the query result to a list of dictionaries for easier access in JavaScript
+    
 
+    print(student_gender_data)
+    
 
+    context = {
+        'total_students': total_students,
+        'total_teachers': total_teachers,
+        'student_gender_data': student_gender_data,
+    }
 
+    return render(request, 'index.html', context)
 
 
 
@@ -440,7 +454,7 @@ def editstudent(request, student_id):
         parent_relationship = request.POST.get('relationship')
 
         # get class instance
-        student_class = get_object_or_404(Classes, class_id=student_class)
+        student_class = get_object_or_404(Classes, class_id =student_class)
 
         # update details
         student.first_name =first_name
@@ -458,15 +472,18 @@ def editstudent(request, student_id):
         student.parent_phone = parent_phone
         student.parent_address = parent_address
         student.parent_relationship = parent_relationship
+
         if image:
             student.image = image
+
         student.save()
         messages.success(request, "Student details updated successfully.")
-        return redirect('editstudent', student_id=student_id)
-
-
-
+        return redirect('editstudent', student_id=student_id)   
         
+    
+    return render(request, 'students/edit-student.html', {'student': student,"classes":classes})
+
+   
 def searchteacher(request):
     if request.method == 'POST':
         searchbyid = request.POST.get('teacher_id')
@@ -544,3 +561,23 @@ def search(request):
         context = {"student": search_by_adm, "students": search_by_name}
 
         return render(request, 'students/students.html', context)
+    
+
+
+def fees(request):
+    return render(request,'fees/fees.html')
+
+
+def addfees(request):
+    return render(request,'fees/add-fees.html')
+
+def addfeescollection(request):
+    return render(request,'fees/add-fees-collection.html')
+
+def feescollections(request):
+    return render(request,'fees/fees-collections.html')
+
+
+
+def editfees(request):
+    return render(request,'fees/edit-fees.html')

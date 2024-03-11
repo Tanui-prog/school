@@ -36,6 +36,14 @@ urlpatterns = [
     path('students_grid', views.students_grid, name='students_grid'),
     path('student_details/<int:student_id>/', views.student_details, name='student_details'),
     path('search results', views.search, name='search'),
+
+
+    path('fees', views.fees, name='fees'),
+    path('addfees', views.addfees, name='addfees'),
+    path('feescollection', views.feescollections, name='feescollections'),
+    path('addfeescollection', views.addfeescollection, name='addfeescollection'),
+    path('editfees', views.editfees, name='editfees'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
