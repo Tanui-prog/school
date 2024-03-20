@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
-import django_heroku
-import dj_database_url
+# import django_heroku
+# import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,9 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3i(wsmfmpp#!33qm!)gxqcz^ot70u8h-i10yer@aewza==24*g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['192.168.233.2']
+ALLOWED_HOSTS = ['.vercel.app','now.sh','127.0.0.1','localhost']
 
 
 # Application definition
@@ -65,10 +65,20 @@ WSGI_APPLICATION = 'school.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'LaapqEOpjpHRHpTYBnoVnKhcTRgzqpfn',
+        'HOST': 'roundhouse.proxy.rlwy.net',
+        'PORT': '12917',
     }
 }
 
@@ -110,9 +120,11 @@ DATE_FORMAT = "d/m/Y"
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join( BASE_DIR, 'staticfiles' )
-STATICFILES_DIRS = (os.path.join( BASE_DIR, 'static' ),)
+# STATIC_ROOT = os.path.join( BASE_DIR, 'staticfiles' )
+# STATICFILES_DIRS = (os.path.join( BASE_DIR, 'static' ),)
 
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 
 # Default primary key field type
@@ -130,6 +142,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 

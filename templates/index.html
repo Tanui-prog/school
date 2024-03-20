@@ -24,7 +24,7 @@
             <div class="card-body">
                 <div class="db-widgets d-flex justify-content-between align-items-center">
                     <div class="db-info">
-                        <h6>Students</h6>
+                        <h6>Total Students</h6>
                         <h3 id="total_students">{{ total_students }}</h3>
                     </div>
                     <div class="db-icon">
@@ -34,16 +34,17 @@
             </div>
         </div>
     </div>
+    
     <div class="col-xl-3 col-sm-6 col-12 d-flex">
         <div class="card bg-comman w-100">
             <div class="card-body">
                 <div class="db-widgets d-flex justify-content-between align-items-center">
                     <div class="db-info">
-                        <h6>Awards</h6>
-                        <h3>50+</h3>
+                        <h6>Total Teachers </h6>
+                        <h3 id="total_teachers" >{{ total_teachers }}</h3>
                     </div>
                     <div class="db-icon">
-                        <img src="{% static 'assets/img/icons/dash-icon-02.svg'%}" alt="Dashboard Icon">
+                        <img src="{% static 'assets/img/icons/teacher-icon-02.svg'%}" alt="Dashboard Icon">
                     </div>
                 </div>
             </div>
@@ -54,8 +55,10 @@
             <div class="card-body">
                 <div class="db-widgets d-flex justify-content-between align-items-center">
                     <div class="db-info">
-                        <h6>Teachers</h6>
-                        <h3 id="total_teachers" >{{ total_teachers }}</h3>
+                        <h6>Total Classes Present</h6>
+                        <h3 id="Classes">{{ classes }}  </h3>
+                        
+
                     </div>
                     <div class="db-icon">
                         <img src="{% static 'assets/img/icons/dash-icon-03.svg'%}" alt="Dashboard Icon">
@@ -88,7 +91,7 @@
             <div class="card-header">
                 <div class="row align-items-center">
                     <div class="col-6">
-                        <h5 class="card-title">Class Performance</h5>
+                        <h5 class="card-title">Teacher-Student Ratio</h5>
                     </div>
                     <div class="col-6">
                         <ul class="chart-list-out">
@@ -99,7 +102,7 @@
                     </div>
                     
                 </div>
-                <canvas id="teacherStudentChart" style="height: 200px;width: 400px;" ></canvas>
+                <canvas id="teacherStudentChart" ></canvas>
             </div>
             <div class="card-body">
                 <div id="apexcharts-area"></div>
@@ -113,17 +116,19 @@
             <div class="card-header">
                 <div class="row align-items-center">
                     <div class="col-6">
-                        <h5 class="card-title">Number of Students</h5>
+                        <h5 class="card-title">Students Gender Distribution</h5>
                     </div>
                     <div class="col-6">
                         <ul class="chart-list-out">
-                            <li><span class="circle-blue"></span>Girls</li>
-                            <li><span class="circle-green"></span>Boys</li>
+                            
                             <li class="star-menus"><a href="javascript:;"><i class="fas fa-ellipsis-v"></i></a></li>
                         </ul>
                     </div>
+                    <h3 style="display: none;"  id="total_male" >{{ male_count }}</h3>
+                    <h3 style="display: none;" id="total_female" >{{ female_count }}</h3>
+                    <h3 style="display: none;"  id="total_others" >{{ others }}</h3>
                     
-                <canvas id="genderChart" style="height:400px ;width: 500px;"></canvas>
+                <canvas id="genderChart" style="height: 300px;" ></canvas>
 
                 </div>
             </div>
@@ -369,61 +374,71 @@
     </div>
 </div>
 </div>
-
 <script>
-    var ctx = document.getElementById('teacherStudentChart').getContext('2d');
-    var totalTeachers = document.getElementById('total_teachers').textContent ;
-    var totalStudents = document.getElementById('total_students').textContent ;
     
+    var doughnutCtx = document.getElementById('teacherStudentChart').getContext('2d');
+    var totalTeachers = parseInt(document.getElementById('total_teachers').textContent);
+    var totalStudents = parseInt(document.getElementById('total_students').textContent);
 
-    totalteachers = parseInt(totalTeachers);
-    totaltudents = parseInt(totalStudents);
-
-    var myChart = new Chart(ctx, {
+    var doughnutChart = new Chart(doughnutCtx, {
         type: 'doughnut',
         data: {
             labels: ['Students', 'Teachers'],
             datasets: [{
-                data: [ totalStudents ,totalTeachers ], // Replace with your actual data
+                data: [totalStudents, totalTeachers],
                 backgroundColor: [
                     '#70c4cf',
-                    'black'
+                    '#f9a825'
                 ],
                 borderWidth: 1
             }]
         },
         options: {
-            responsive: false,
-            maintainAspectRatio: false,
+            responsive: false, // Not responsive
+            maintainAspectRatio: false, // Not maintaining aspect ratio
             legend: {
                 position: 'left'
+            },
+            title: {
+                display: true,
+                text: 'Teacher-Student Ratio'
             }
         }
     });
 
-    var genderCtx = document.getElementById('genderChart').getContext('2d');
-    var genderData = {
-        labels: ['Male', 'Female','Others'],
-        datasets: [{
-            data: [ 76,87,64],
-            backgroundColor: ['#3d5ee1', '#ff6f61','green'],
-            borderWidth: 1
-        }]
-    };
 
-    var genderChart = new Chart(genderCtx, {
+    var barCtx = document.getElementById('genderChart').getContext('2d');
+    var totalboys = parseInt(document.getElementById('total_male').textContent);
+    var totalgirls = parseInt(document.getElementById('total_female').textContent);
+    var totalothers = parseInt(document.getElementById('total_others').textContent);
+
+    var barChart = new Chart(barCtx, {
         type: 'bar',
-        data: genderData,
+        data: {
+            labels: ['Boys', 'Girls','Others'],
+            datasets: [{
+                data: [totalboys, totalgirls, totalothers],
+                backgroundColor: [
+                    'blue',
+                    'pink',
+                    'green'
+                ],
+                borderWidth: 1
+            }]
+        },
         options: {
-            responsive: false,
-            maintainAspectRatio: false,
+            responsive: false, // Not responsive
+            maintainAspectRatio: false, // Not maintaining aspect ratio
             legend: {
                 position: 'left'
+            },
+            title: {
+                display: true,
+                text: 'Gender Distribution'
             }
         }
     });
 
 </script>
-
 
 {% endblock %}

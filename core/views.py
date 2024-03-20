@@ -19,16 +19,19 @@ def home(request):
     total_teachers = Teacher.objects.count()
 
     student_gender_data = list(Students.objects.values('student_gender').annotate(count=Count('student_gender')))
+    classes = Classes.objects.all().count()
     # Convert the query result to a list of dictionaries for easier access in JavaScript
     
 
     male_count = Students.objects.filter(student_gender='male').count()
     female_count = Students.objects.filter(student_gender='female').count()
-    others = Students.objects.filter(student_gender= 'other' )
+    others = Students.objects.filter(student_gender= 'other' ).count()
 
     data = {
-        'labels': ['Male', 'Female', 'Others'],
-        'values': [male_count, female_count, others],
+        'male_count':male_count,
+        'female_count':female_count,
+        'others':others,
+        'classes': classes,
         'total_students': total_students,
         'total_teachers': total_teachers,
         'student_gender_data': student_gender_data,
@@ -488,85 +491,11 @@ def editstudent(request, student_id):
     
     return render(request, 'students/edit-student.html', {'student': student,"classes":classes})
 
-   
-def searchteacher(request):
-    if request.method == 'POST':
-        searchbyid = request.POST.get('teacher_id')
-        full_name = request.POST.get('teacher_name')
-        phone = request.POST.get('phone_number')
-
-        search_by_id = None
-        search_by_name = None
-        search_by_phone = None
-
-
-       
-        
-
-        # Search by admission number (exact match)
-        search_by_id = Teacher.objects.filter(tsc_no = searchbyid)
-        # search by phone number
-        search_by_phone = Teacher.objects.filter(teacher_phone = phone)
-
-        # Search by full name
-        search_by_name =Teacher.objects.filter(teacher_name=full_name)
-        
-        context = {"teachers": search_by_id,
-                   "teachers":search_by_name,
-                   "teachers":search_by_phone}
-
-        return render(request, 'teachers/teachers.html', context)
-
-    else:
-        
-        return render(request, 'teachers/teacher.html', {'teachers': teachers , 'classes': classes})
-
 
 
 def delete_student(request):
     
     return render(request, 'students/delete-student.html')
-
-
-def search(request):
-    if request.method == 'POST':
-        searchbyadm = request.POST.get('admission_no')
-        full_name = request.POST.get('name')
-
-        search_by_adm = None
-        search_by_name = None
-
-        if searchbyadm:
-            # Search by admission number (exact match)
-            search_by_adm = Students.objects.filter(admission_no=searchbyadm)
-
-        # If admission number is empty, use name for search
-        elif full_name:
-            # Split full name into first name and last name
-            names = full_name.split()
-            first_name = names[0] if names else ""
-            last_name = names[-1] if len(names) > 1 else first_name  # Use first name if last name is not provided
-            
-            # Search by full name
-            search_by_name = Students.objects.filter(
-                first_name=first_name, last_name=last_name
-            )
-
-            if not search_by_name:
-                messages.error(request, "No student found with the provided name.")
-                search_by_name = Students.objects.filter(
-                    Q(first_name__icontains=first_name) | Q(last_name__icontains=last_name)
-                )
-
-        # If both admission number and name are empty, fall back to using admission number
-        elif not search_by_adm:
-            messages.error(request, "Please provide admission number or name for search.")
-            search_by_adm = Students.objects.none()
-
-        context = {"student": search_by_adm, "students": search_by_name}
-
-        return render(request, 'students/students.html', context)
-    
 
 
 def fees(request):
