@@ -2,9 +2,6 @@
 mysql-connector==2.2.9
 whitenoise==5.2.0
 Pillow
-﻿asgiref==3.6.0
-certifi==2023.5.7
-charset-normalizer==3.1.0
 Django==4.1.7
 idna==3.4
 psycopg2-binary==2.9.6
